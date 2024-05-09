@@ -1,0 +1,9 @@
+{
+    "settings": {
+        "language": {
+            "lang": "语言",
+            "desc": "选择对话语言",
+            "default": "跟随Obsidian"
+        }
+    }
+}

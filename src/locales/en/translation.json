@@ -1,0 +1,11 @@
+{
+    "settings": {
+        "language": {
+            "lang": "language",
+            "desc": "select chat language",
+            "zh": "中文",
+            "en": "English",
+            "default": "Follow Obsidian"
+        }
+    }
+}

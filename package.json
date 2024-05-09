@@ -24,5 +24,9 @@
 		"svelte-preprocess": "^5.1.4",
 		"tslib": "2.4.0",
 		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"i18next": "^23.11.3",
+		"svelte-i18next": "^2.2.2"
 	}
 }
