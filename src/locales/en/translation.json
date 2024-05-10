@@ -7,5 +7,9 @@
             "en": "English",
             "default": "Follow Obsidian"
         }
+    },
+    "chat_view":{
+        "icon_title":"Chat View",
+        "input_placeholder":"Type your messages here"
     }
 }

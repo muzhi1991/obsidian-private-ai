@@ -26,6 +26,7 @@
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
+		"elizabot": "^0.0.3",
 		"i18next": "^23.11.3",
 		"svelte-i18next": "^2.2.2"
 	}

@@ -1,19 +1,40 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin } from 'obsidian';
 
 import { VIEW_TYPE_EXAMPLE, ExampleView } from './views/ExampleView'
+import { VIEW_TYPE_CHAT, ChatView } from './views/ChatView'
 import i18n  from './config';
 import { get } from 'svelte/store';
 // Remember to rename these classes and interfaces!
 
+interface OpenAIConfig {
+	base_url:string
+	model:string
+}
+
+interface OllamaConfig {
+	base_url:string
+	model:string
+}
 interface MyPluginSettings {
-	mySetting: string;
-	language:string;
+	mySetting: string
+	language:string
+	llm_server:string
+	openai_config:Partial<OpenAIConfig>
+	ollama_config:Partial<OllamaConfig>
 	test: string
 }
 
 const DEFAULT_SETTINGS: Partial<MyPluginSettings>  = {
 	mySetting: 'default',
 	language: 'default',
+	llm_server: 'openai',
+	openai_config: {
+		base_url: "https://api.openai.com/v1",
+	},
+	ollama_config: {
+		base_url:"http://localhost:11434"
+	},
+
 }
 
 
@@ -42,6 +63,10 @@ export default class MyPlugin extends Plugin {
 			VIEW_TYPE_EXAMPLE,
 			(leaf) => new ExampleView(leaf)
 		);
+		this.registerView(
+			VIEW_TYPE_CHAT,
+			(leaf) => new ChatView(leaf)
+		);
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
@@ -49,8 +74,16 @@ export default class MyPlugin extends Plugin {
 			new Notice('activate custom view');
 			this.activateView();
 		});
+
+		const chatIconEl = this.addRibbonIcon('bot',get(i18n).t('chat_view.icon_title') , (evt: MouseEvent) => {
+			// Called when the user clicks the icon.
+			new Notice('activate chat view');
+			this.activateChatView();
+		});
+
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
+		chatIconEl.addClass('my-plugin-ribbon-class');
 
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
 		const statusBarItemEl = this.addStatusBarItem();
@@ -134,6 +167,29 @@ export default class MyPlugin extends Plugin {
 			// in the right sidebar for it
 			leaf = workspace.getRightLeaf(false);
 			await leaf?.setViewState({ type: VIEW_TYPE_EXAMPLE, active: true });
+		}
+
+		// "Reveal" the leaf in case it is in a collapsed sidebar
+		if (leaf != null){
+			workspace.revealLeaf(leaf);
+		}
+			
+	}
+
+	async activateChatView() {
+		const { workspace } = this.app;
+
+		let leaf: WorkspaceLeaf | null = null;
+		const leaves = workspace.getLeavesOfType(VIEW_TYPE_CHAT);
+
+		if (leaves.length > 0) {
+			// A leaf with our view already exists, use that
+			leaf = leaves[0];
+		} else {
+			// Our view could not be found in the workspace, create a new leaf
+			// in the right sidebar for it
+			leaf = workspace.getRightLeaf(false);
+			await leaf?.setViewState({ type: VIEW_TYPE_CHAT, active: true });
 		}
 
 		// "Reveal" the leaf in case it is in a collapsed sidebar
