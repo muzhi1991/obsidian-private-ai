@@ -12,6 +12,7 @@
     "module": "ESNext",
     "target": "ES6",
     "allowJs": true,
+    // "allowImportingTsExtensions": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
     "importHelpers": true,
@@ -25,6 +26,6 @@
     ]
   },
   "include": [
-    "**/*.ts","locales/*/*.json"
+    "**/*.ts","locales/*/*.json","*/*/*.svelte"
   ]
 }

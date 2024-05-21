@@ -26,8 +26,13 @@
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
+		"@langchain/community": "^0.0.55",
+		"@langchain/core": "^0.1.62",
+		"@langchain/openai": "^0.0.28",
+		"axios": "^1.6.8",
 		"elizabot": "^0.0.3",
 		"i18next": "^23.11.3",
+		"langchain": "^0.1.36",
 		"svelte-i18next": "^2.2.2"
 	}
 }

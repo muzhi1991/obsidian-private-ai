@@ -46,6 +46,9 @@ const context = await esbuild.context({
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
 	outfile: "main.js",
+	define:{
+		'process.env.LANGCHAIN_VERBOSE': '"true"',
+	}
 });
 
 if (prod) {

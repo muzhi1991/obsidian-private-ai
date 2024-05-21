@@ -3,13 +3,76 @@
         "language": {
             "lang": "language",
             "desc": "select chat language",
-            "zh": "中文",
+            "zh": "简体中文",
             "en": "English",
+            "zh-TW": "繁體中文",
+            "de": "Deutsch",
             "default": "Follow Obsidian"
+        },
+        "basic": {
+            "head": "Basic"
+        },
+        "mode": {
+            "title": "Chat Mode",
+            "desc": "Select conversation mode with LLM",
+            "naive_chat": "Naive Chat",
+            "note_qa": "Note QA",
+            "vault_qa": "Vault QA"
+        },
+        "llm_server": {
+            "head": "LLM Config",
+            "title": "LLM Server",
+            "desc": "LLM Server Config support OpenAI && Ollama",
+            "openai": "OpenAI",
+            "ollama": "Ollama"
+        },
+        "embedding_server": {
+            "head": "Embedding Config",
+            "title": "Embedding Server",
+            "desc": "Embedding Server Config support OpenAI && Ollama",
+            "openai": "OpenAI",
+            "ollama": "Ollama"
+        },
+        "openai": {
+            "api_key": "OPENAI API KEY",
+            "api_key_desc": "OpenAI api key <a href='https://platform.openai.com/account/api-keys'>here</a> ",
+            "model": "Model Name",
+            "model_desc": "model name of OpenAI <a href='https://platform.openai.com/docs/models'>here</a> ",
+            "embedding_model": "Embedding Model Name",
+            "embedding_model_desc": "embedding model name of OpenAI <a href='https://platform.openai.com/docs/guides/embeddings/embedding-models'>here</a> ",
+            "model_tip": "The model name you entered is not in the list: {{models}}. Please note that it is consistent with the OpenAI website. 👀<a href='https://platform.openai.com/docs/models'>here</a> ",
+            "model_tip_ok": "OK",
+            "base_url": "OpenAI API Base URL",
+            "base_url_desc": "API base url, you can change it If you use a proxy"
+        },
+        "ollama": {
+            "model": "Model Name",
+            "model_desc": "model name of Ollama support <a href='https://ollama.com/library'>here</a> ",
+            "embedding_model": "Embedding Model Name",
+            "embedding_model_desc": "embedding model name of Ollama support <a href='https://ollama.com/library'>here</a> ",
+            "base_url": "Ollama API Base URL",
+            "base_url_desc": "API base url, you can change it If you use remote server, Please set OLLAMA_ORIGINS=* for server"
+        },
+        "error": {
+            "openai_api_key_empty": "Please set OpenAI api key in the settings",
+            "openai_base_url_empty": "Please set base url for OpenAI API  in settings",
+            "openai_model_empty": "Please set model name for OpenAI in settings",
+            "openai_embedding_model_empty": "Please set embedding model name for OpenAI in settings",
+            "ollama_base_url_empty": "Please set base url for Ollama API in settings",
+            "ollama_model_empty": "Please set model name for Ollama in settings",
+            "ollama_embedding_model_empty": "Please set embedding model name for Ollama in settings",
+            "invalid_api_key": "Invalid api key, please check api key in the settings",
+            "insufficient_quota_error": "Insufficient quota error, please check your OpenAI account",
+            "failed_to_fetch": "Faied to fetch url: {{url}}",
+            "model_not_exists": "The model {{model}} does not exist or you do not have access to it",
+            "request_common": "Request error:{{info}}"
         }
     },
-    "chat_view":{
-        "icon_title":"Chat View",
-        "input_placeholder":"Type your messages here"
+    "chat_view": {
+        "icon_title": "Open Chat View",
+        "notice_activate_view": "Chat view is activated",
+        "command_activate_view": "Open chat view",
+        "input_placeholder": "Type your messages here",
+        "bot_welcome": "You can ask me any questions!"
     }
 }

@@ -1,6 +1,6 @@
-import { ItemView, WorkspaceLeaf } from "obsidian";
+import { ItemView, WorkspaceLeaf, addIcon, setIcon } from "obsidian";
 import Component from "../components/Chat.svelte";
-
+	
 export const VIEW_TYPE_CHAT = "ai-chat-view";
 export class ChatView extends ItemView {
 	component!: Component;
@@ -26,5 +26,6 @@ export class ChatView extends ItemView {
 				// variable: 1
 			}
 		});
+		this.icon="messages-square"
 	}
 }

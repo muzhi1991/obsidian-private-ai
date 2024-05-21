@@ -1,0 +1,74 @@
+{
+    "settings": {
+        "language": {
+            "lang": "語言",
+            "desc": "選擇聊天語言",
+            "default": "遵循Obsidian"
+        },
+        "basic": {
+            "head": "基本"
+        },
+        "mode": {
+            "title": "聊天模式",
+            "desc": "選擇與LLM的對話模式",
+            "naive_chat": "簡單聊天",
+            "note_qa": "筆記問答",
+            "vault_qa": "文件庫問答"
+        },
+        "llm_server": {
+            "head": "LLM 配置",
+            "title": "LLM 伺服器",
+            "desc": "LLM 伺服器配置支援 OpenAI && Ollama",
+            "openai": "OpenAI",
+            "ollama": "Ollama"
+        },
+        "embedding_server": {
+            "head": "嵌入配置",
+            "title": "嵌入伺服器",
+            "desc": "嵌入伺服器配置支援 OpenAI && Ollama",
+            "openai": "OpenAI",
+            "ollama": "Ollama"
+        },
+        "openai": {
+            "api_key": "OPENAI API 鍵",
+            "api_key_desc": "OpenAI API 鍵 <a href='https://platform.openai.com/account/api-keys'>這裡</a>",
+            "model": "模型名稱",
+            "model_desc": "OpenAI 模型名稱 <a href='https://platform.openai.com/docs/models'>這裡</a>",
+            "embedding_model": "嵌入模型名稱",
+            "embedding_model_desc": "OpenAI 嵌入模型名稱 <a href='https://platform.openai.com/docs/guides/embeddings/embedding-models'>這裡</a>",
+            "model_tip": "你輸入的模型名稱不在列表中：{{models}}。請確認與OpenAI網站一致。👀<a href='https://platform.openai.com/docs/models'>這裡</a>",
+            "model_tip_ok": "好的",
+            "base_url": "OpenAI API 基本URL",
+            "base_url_desc": "API 基本URL，如果你使用代理伺服器，可以更改它"
+        },
+        "ollama": {
+            "model": "模型名稱",
+            "model_desc": "Ollama 支持的模型名稱 <a href='https://ollama.com/library'>這裡</a>",
+            "embedding_model": "嵌入模型名稱",
+            "embedding_model_desc": "Ollama 支持的嵌入模型名稱 <a href='https://ollama.com/library'>這裡</a>",
+            "base_url": "Ollama API 基本URL",
+            "base_url_desc": "API 基本URL，如果你使用遠端伺服器，可以更改它，請設置 OLLAMA_ORIGINS=* 用於伺服器"
+        },
+        "error": {
+            "openai_api_key_empty": "請在設置中設置 OpenAI API 鍵",
+            "openai_base_url_empty": "請在設置中設置 OpenAI API 基本URL",
+            "openai_model_empty": "請在設置中設置 OpenAI 模型名稱",
+            "openai_embedding_model_empty": "請在設置中設置 OpenAI 嵌入模型名稱",
+            "ollama_base_url_empty": "請在設置中設置 Ollama API 基本URL",
+            "ollama_model_empty": "請在設置中設置 Ollama 模型名稱",
+            "ollama_embedding_model_empty": "請在設置中設置 Ollama 嵌入模型名稱",
+            "invalid_api_key": "無效的 API 鍵，請在設置中檢查 API 鍵",
+            "insufficient_quota_error": "配額不足錯誤，請檢查你的 OpenAI 帳戶",
+            "failed_to_fetch": "無法獲取URL：{{url}}",
+            "model_not_exists": "模型 {{model}} 不存在或你無權訪問它",
+            "request_common": "請求錯誤：{{info}}"
+        }
+    },
+    "chat_view": {
+        "icon_title": "開啟聊天視圖",
+        "notice_activate_view": "聊天视图已激活",
+        "command_activate_view": "開啟聊天視圖",
+        "input_placeholder": "在此輸入你的消息",
+        "bot_welcome": "你可以問我任何問題！"
+    }
+}
