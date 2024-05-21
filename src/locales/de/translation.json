@@ -1,0 +1,74 @@
+{
+    "settings": {
+        "language": {
+            "lang": "Sprache",
+            "desc": "Chat-Sprache auswählen",
+            "default": "Dem Standard von Obsidian folgen"
+        },
+        "basic": {
+            "head": "Grundlegend"
+        },
+        "mode": {
+            "title": "Chat-Modus",
+            "desc": "Konversationsmodus mit LLM auswählen",
+            "naive_chat": "Einfacher Chat",
+            "note_qa": "Notiz-Fragen und Antworten",
+            "vault_qa": "Vault-Fragen und Antworten"
+        },
+        "llm_server": {
+            "head": "LLM Konfiguration",
+            "title": "LLM-Server",
+            "desc": "LLM-Server-Konfiguration unterstützt OpenAI & Ollama",
+            "openai": "OpenAI",
+            "ollama": "Ollama"
+        },
+        "embedding_server": {
+            "head": "Einbettungskonfiguration",
+            "title": "Einbettungsserver",
+            "desc": "Einbettungsserver-Konfiguration unterstützt OpenAI & Ollama",
+            "openai": "OpenAI",
+            "ollama": "Ollama"
+        },
+        "openai": {
+            "api_key": "OPENAI API-SCHLÜSSEL",
+            "api_key_desc": "OpenAI API-Schlüssel <a href='https://platform.openai.com/account/api-keys'>hier</a> ",
+            "model": "Modellname",
+            "model_desc": "Modellname von OpenAI <a href='https://platform.openai.com/docs/models'>hier</a> ",
+            "embedding_model": "Einbettungsmodellname",
+            "embedding_model_desc": "Einbettungsmodellname von OpenAI <a href='https://platform.openai.com/docs/guides/embeddings/embedding-models'>hier</a> ",
+            "model_tip": "Der eingegebene Modellname ist nicht in der Liste: {{models}}. Bitte stellen Sie sicher, dass er mit der OpenAI-Website übereinstimmt. 👀<a href='https://platform.openai.com/docs/models'>hier</a> ",
+            "model_tip_ok": "OK",
+            "base_url": "OpenAI API-Basis-URL",
+            "base_url_desc": "API-Basis-URL, Sie können sie ändern, wenn Sie einen Proxy verwenden"
+        },
+        "ollama": {
+            "model": "Modellname",
+            "model_desc": "Modellname von Ollama Unterstützung <a href='https://ollama.com/library'>hier</a> ",
+            "embedding_model": "Einbettungsmodellname",
+            "embedding_model_desc": "Einbettungsmodellname von Ollama Unterstützung <a href='https://ollama.com/library'>hier</a> ",
+            "base_url": "Ollama API-Basis-URL",
+            "base_url_desc": "API-Basis-URL, Sie können sie ändern, wenn Sie einen Remote-Server verwenden. Bitte setzen Sie OLLAMA_ORIGINS=* für den Server"
+        },
+        "error": {
+            "openai_api_key_empty": "Bitte setzen Sie den OpenAI-API-Schlüssel in den Einstellungen",
+            "openai_base_url_empty": "Bitte setzen Sie die Basis-URL für die OpenAI-API in den Einstellungen",
+            "openai_model_empty": "Bitte setzen Sie den Modellnamen für OpenAI in den Einstellungen",
+            "openai_embedding_model_empty": "Bitte setzen Sie den Einbettungsmodellnamen für OpenAI in den Einstellungen",
+            "ollama_base_url_empty": "Bitte setzen Sie die Basis-URL für die Ollama-API in den Einstellungen",
+            "ollama_model_empty": "Bitte setzen Sie den Modellnamen für Ollama in den Einstellungen",
+            "ollama_embedding_model_empty": "Bitte setzen Sie den Einbettungsmodellnamen für Ollama in den Einstellungen",
+            "invalid_api_key": "Ungültiger API-Schlüssel, bitte überprüfen Sie den API-Schlüssel in den Einstellungen",
+            "insufficient_quota_error": "Unzureichendes Kontingent, bitte überprüfen Sie Ihr OpenAI-Konto",
+            "failed_to_fetch": "URL konnte nicht abgerufen werden: {{url}}",
+            "model_not_exists": "Das Modell {{model}} existiert nicht oder Sie haben keinen Zugriff darauf",
+            "request_common": "Anforderungsfehler:{{info}}"
+        }
+    },
+    "chat_view": {
+        "icon_title": "Öffnen Sie die Chat-Ansicht",
+        "notice_activate_view": "Die Chat-Ansicht ist aktiviert",
+        "command_activate_view": "Chat-Ansicht öffnen",
+        "input_placeholder": "Tippen Sie Ihre Nachrichten hier ein",
+        "bot_welcome": "Sie können mir alle Fragen stellen!"
+    }
+}
