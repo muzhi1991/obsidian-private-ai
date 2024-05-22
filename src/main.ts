@@ -82,7 +82,7 @@ export default class MyPlugin extends Plugin {
 			lang=window.localStorage.getItem("language") || 'en'
 		}
 		get(i18n).changeLanguage(lang)
-		new Notice(`load plugin: ${JSON.stringify(this.settings)}`)
+		// new Notice(`load plugin: ${JSON.stringify(this.settings)}`)
 		
 
 		this.registerView(

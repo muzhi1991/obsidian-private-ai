@@ -35,7 +35,7 @@ Das Plugin bietet drei Dialogmodi:
 
 1. **Plugin herunterladen und installieren** (Noch nicht veröffentlicht, manuelle Installation wie folgt erforderlich)
 
-   Suchen Sie im Obsidian-Plugin-Markt nach „PrivateAI“ und klicken Sie auf Installieren. Alternativ können Sie dieses Repository klonen und dessen Inhalt in das Obsidian-Plugin-Verzeichnis kopieren.
+   Suchen Sie im Obsidian-Plugin-Markt nach "PrivateAI" und klicken Sie auf Installieren, oder laden Sie das Plugin aus dem Release-Verzeichnis herunter und kopieren Sie dessen Inhalte in das Obsidian-Plugin-Verzeichnis (für die manuelle Installation siehe untenstehendes Kapitel). Nach Abschluss der Installation, denken Sie daran, das Plugin in den Einstellungen für Community-Plugins zu aktivieren.
 
 2. **Plugin konfigurieren**
 
@@ -55,14 +55,20 @@ Das Plugin bietet drei Dialogmodi:
 > * Verwenden des LLM-Modells von OpenAI, während das Embedding-Modell von Ollama verwendet wird.
 > * Verwenden des LLM-Modells von Ollama, während das Embedding-Modell von OpenAI verwendet wird.
 
+3. **Starten Sie die PrivateAI-Plugin-Schnittstelle**
+Sie können die Plugin-Schnittstelle auf eine von zwei Arten aktivieren:
+* Klicken Sie in der linken Seitenleiste auf das Roboterbild <img style="float: right;" src="https://api.iconify.design/lucide:bot.svg">
+* Verwenden Sie `Cmd+p`, um das Befehlsfeld zu öffnen, geben Sie `privateai` ein, und 'Chatansicht öffnen' wird angezeigt.
+
 ### Manuelle Installation
 
 * Navigieren Sie zum Verzeichnis `.obsidian/plugins` innerhalb Ihres Obsidian Vault, welches Sie unter 'Select open another Vault' in der unteren linken Ecke der Schnittstelle finden <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
-* Klonen Sie das Projekt in das Plugins-Verzeichnis
+* Laden Sie die neueste Version aus dem [Release](https://github.com/muzhi1991/obsidian-private-ai/releases/latest) in das Verzeichnis .obsidian/plugins herunter, zum Beispiel, wenn das heruntergeladene Archiv obsidian-private-ai.tar.gz heißt, dann entpacken Sie es im Verzeichnis .obsidian/plugins.
 
 ```bash
   cd ${Vault_Dir}/.obsidian/plugins
-  git clone https://github.com/muzhi1991/obsidian-private-ai.git
+  wget https://github.com/muzhi1991/obsidian-private-ai/releases/latest/download/obsidian-private-ai.tar.gz -O obsidian-private-ai.tar.gz
+  tar xvf obsidian-private-ai.tar.gz
 ```
 
 ## FAQ

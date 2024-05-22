@@ -60,13 +60,14 @@ export const renderCommentTextMarkdown = (node: HTMLElement, comment: { text: st
 
 export function Object_assign(target: any, ...sources: Array<any>) {
   sources.forEach(source => {
-    Object.keys(source).forEach(key => {
-      const s_val = source[key]
-      const t_val = target[key]
-      target[key] = t_val && s_val && typeof t_val === 'object' && typeof s_val === 'object'
-        ? Object_assign(t_val, s_val)
-        : s_val
-    })
+    if (source)
+      Object.keys(source).forEach(key => {
+        const s_val = source[key]
+        const t_val = target[key]
+        target[key] = t_val && s_val && typeof t_val === 'object' && typeof s_val === 'object'
+          ? Object_assign(t_val, s_val)
+          : s_val
+      })
   })
   return target
 }

@@ -35,7 +35,7 @@ Obsidian PrivateAI 插件 (PrivateAI) 是一個創新的 Obsidian 插件，致�
 
 1. **下載與安裝插件**（尚未發布，需要按照下面的方式手動安裝）
 
-   在 Obsidian 插件市場中搜索 “PrivateAI” 並點擊安裝。或者克隆此倉庫並將其內容複製到 Obsidian 插件目錄。
+   在 Obsidian 插件市場中搜尋 “PrivateAI” 並點擊安裝，或者從 release 目錄下載插件並將其內容複製到 Obsidian 插件目錄（手動安裝詳見下面的章節）。安裝完成後，記得在第三方插件設置（Community Plugins）中啟動插件。
 
 2. **配置插件**
 
@@ -55,14 +55,21 @@ Obsidian PrivateAI 插件 (PrivateAI) 是一個創新的 Obsidian 插件，致�
 > * 使用 OpenAI 的 LLM 模型，同時使用 Ollama 的 Embedding 模型。
 > * 使用 Ollama 的 LLM 模型，同時使用 OpenAI 的 Embedding 模型。
 
+
+3. **啟動PrivateAI插件對話界面**
+你有兩種任意一種方式激活插件的對話界面：
+* 在左側的側欄，點擊機器人圖片 <img style="float: right;" src="https://api.iconify.design/lucide:bot.svg">
+* 使用 `Cmd+p` 呼出Command Panel，輸入 `privateai`，就會出現『打開聊天視圖』。
+
 ### 手動安裝
 
 * 進入您的 Obsidian Vault目錄下的 `.obsidian/plugins` 目錄，您的Vault目錄請在『界面的左下角->打開其他倉庫』裡查看 <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
-* 克隆項目到 plugins 目錄下
+* 從 [release](https://github.com/muzhi1991/obsidian-private-ai/releases/latest) 下載最新的版本到 .obsidian/plugins 目錄，例如下載的壓縮包是 obsidian-private-ai.tar.gz，然後在 .obsidian/plugins 目錄下解壓。
 
 ```bash
   cd ${Vault_Dir}/.obsidian/plugins
-  git clone https://github.com/muzhi1991/obsidian-private-ai.git
+  wget https://github.com/muzhi1991/obsidian-private-ai/releases/latest/download/obsidian-private-ai.tar.gz -O obsidian-private-ai.tar.gz
+  tar xvf obsidian-private-ai.tar.gz
 ```
 
 ## FAQ

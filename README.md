@@ -35,7 +35,7 @@ The plugin offers three dialogue modes:
 
 1. **Download and Install the Plugin** (Not yet released, manual installation required as follows)
 
-   Search for “PrivateAI” in the Obsidian plugin market and click install. Alternatively, clone this repository and copy its contents to the Obsidian plugin directory.
+   Search for "PrivateAI" in the Obsidian plugin market and click install, or download the plugin from the release directory and copy its contents to the Obsidian plugin directory (for manual installation, see the section below). After completing the installation, remember to activate the plugin in the Community Plugins settings.
 
 2. **Configure the Plugin**
 
@@ -55,16 +55,23 @@ The plugin offers three dialogue modes:
 > * Use OpenAI’s LLM model while using Ollama's Embedding model.
 > * Use Ollama’s LLM model while using OpenAI's Embedding model.
 
+3. **Launch the PrivateAI Plugin Interface**
+You can activate the plugin interface in one of two ways:
+* In the sidebar on the left, click the robot image <img style="float: right;" src="https://api.iconify.design/lucide:bot.svg">
+* Use `Cmd+p` to open the Command Panel, enter `privateai`, and 'Open Chat View' will appear.
+
 ### Manual Installation
 
 * Navigate to the `.obsidian/plugins` directory inside your Obsidian Vault, which can be found under 'Select open another vault' at the bottom left corner of the interface <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
-* Clone the project into the plugins directory
+* Download the latest version from the [release](https://github.com/muzhi1991/obsidian-private-ai/releases/latest) to the .obsidian/plugins directory, for example, if the downloaded archive is obsidian-private-ai.tar.gz, then extract it in the .obsidian/plugins directory.
 
 ```bash
   cd ${Vault_Dir}/.obsidian/plugins
-  git clone https://github.com/muzhi1991/obsidian-private-ai.git
+  wget https://github.com/muzhi1991/obsidian-private-ai/releases/latest/download/obsidian-private-ai.tar.gz -O obsidian-private-ai.tar.gz
+  tar xvf obsidian-private-ai.tar.gz
 ```
 
+* enable plugin in setting
 ## FAQ
 
 #### How to Implement Local First
