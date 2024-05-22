@@ -3,6 +3,12 @@
 ![GitHub manifest version](https://img.shields.io/github/manifest-json/v/muzhi1991/obsidian-private-ai)
 ![GitHub License](https://img.shields.io/github/license/muzhi1991/obsidian-private-ai)
 
+[![zh](https://img.shields.io/badge/lang-zh-red.svg)](https://github.com/muzhi1991/obsidian-private-ai/blob/master/README_zh.md)
+[![zh-TW](https://img.shields.io/badge/lang-zh--TW-green.svg)](https://github.com/muzhi1991/obsidian-private-ai/blob/master/README_zh-TW.md)
+[![de](https://img.shields.io/badge/lang-de-yellow.svg)](https://github.com/muzhi1991/obsidian-private-ai/blob/master/README_de.md)
+
+
+
 The Obsidian PrivateAI Plugin (PrivateAI) is an innovative Obsidian plugin aimed at leveraging advanced AI technology to interact with your local notes. The plugin is designed to enhance the efficiency of knowledge management and utilization, help users refine and summarize information, and generate new insights. PrivateAI supports multiple languages, including Simplified Chinese, Traditional Chinese, English, and German.
 
 ## Features
