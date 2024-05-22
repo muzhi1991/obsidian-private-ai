@@ -1,96 +1,104 @@
-# Obsidian Sample Plugin
+# Obsidian PrivateAI Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+![GitHub manifest version](https://img.shields.io/github/manifest-json/v/muzhi1991/obsidian-private-ai)
+![GitHub License](https://img.shields.io/github/license/muzhi1991/obsidian-private-ai)
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+The Obsidian PrivateAI Plugin (PrivateAI) is an innovative Obsidian plugin aimed at leveraging advanced AI technology to interact with your local notes. The plugin is designed to enhance the efficiency of knowledge management and utilization, help users refine and summarize information, and generate new insights. PrivateAI supports multiple languages, including Simplified Chinese, Traditional Chinese, English, and German.
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+## Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+* **Knowledge Base Q&A**: Implement cutting-edge RAG applications in Obsidian to quickly get answers from your knowledge base.
+* **Thought Summarization and Construction**: Use the latest large language models to help you refine and summarize knowledge and generate new ideas.
+* **Local First**: Supports Ollama local solutions, including LLM and Embedding models, ensuring data privacy and quick response.
+* **OpenAI Interface Support**: For users who cannot deploy locally, this plugin provides support for OpenAI interfaces with customizable configurations.
+* **i18n Adaptation**: Supports multiple languages; currently supports English, Simplified Chinese, Traditional Chinese, and German.
 
-## First time developing plugins?
+The plugin offers three dialogue modes:
 
-Quick starting guide for new plugin devs:
+* **NativeQA**: Direct conversation with the model, suitable for general question answering.
+* **NoteQA**: Uses the currently open note as context to converse with the model, helping in-depth understanding and expansion of the note content.
+* **VaultQA**: (Coming soon) Cross-note dialogue within the Vault for intelligent summarization and knowledge extraction.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Interface Preview
 
-## Releasing new releases
+![App Screenshot](./screenshots/main.png)
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+## Installation and Configuration
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+### Requirements
 
-## Adding your plugin to the community plugin list
+- Obsidian 1.5.x
+- Ollama local solution (optional)
+- OpenAI API key (optional)
 
-- Check https://github.com/obsidianmd/obsidian-releases/blob/master/plugin-review.md
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+### Installation Steps
 
-## How to use
+1. **Download and Install the Plugin** (Not yet released, manual installation required as follows)
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+   Search for “PrivateAI” in the Obsidian plugin market and click install. Alternatively, clone this repository and copy its contents to the Obsidian plugin directory.
 
-## Manually installing the plugin
+2. **Configure the Plugin**
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+   Go to the settings page in Obsidian, find the “PrivateAI” plugin, and configure the local solution or OpenAI interface as per your needs.
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
+   - **Local Solution (Local First)**: Requires downloading and configuring Ollama models; refer to [Ollama Official](https://ollama.com/).
+     - Configure Ollama’s interface (default: localhost:11434)
+     - Specify LLM model name (required)
+     - Configure Embedding model name (required)
+     - Ensure Ollama service is configured to support environment variable `OLLAMA_ORIGINS=app://obsidian.md*` (mandatory)
+   - **OpenAI Interface**:
+     - Enter your OpenAI API key (required)
+     - Configure the LLM model to use (default: `gpt-3.5-turbo`, recommended `gpt-4o`)
+     - Configure the Embedding model to use (default: `text-embedding-3-small`)
 
-## Funding URL
+> The above configurations can be freely combined, for example:
+> * Use OpenAI’s LLM model while using Ollama's Embedding model.
+> * Use Ollama’s LLM model while using OpenAI's Embedding model.
 
-You can include funding URLs where people who use your plugin can financially support it.
+### Manual Installation
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+* Navigate to the `.obsidian/plugins` directory inside your Obsidian Vault, which can be found under 'Select open another vault' at the bottom left corner of the interface <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
+* Clone the project into the plugins directory
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+```bash
+  cd ${Vault_Dir}/.obsidian/plugins
+  git clone https://github.com/muzhi1991/obsidian-private-ai.git
 ```
 
-If you have multiple URLs, you can also do:
+## FAQ
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
+#### How to Implement Local First
 
-## API Documentation
+This plugin uses Ollama to support the local deployment of LLM and Embedding models. For users concerned about data security, it is recommended to install [Ollama](https://ollama.com/) on their system for localized deployment. After installation, download models suitable for your machine configuration (7B/14B models are recommended for performance and speed balance).
 
-See https://github.com/obsidianmd/obsidian-api
+If service requests fail, check:
+* Whether the Ollama URL configuration is correct
+* Whether the Ollama service has started successfully and the port is accessible; you can test using `telnet localhost 11434`
+* Whether the `OLLAMA_ORIGINS=app://obsidian.md*` or `OLLAMA_ORIGINS=*` environment variable is set when starting the Ollama service (this is very important as the Ollama Server checks CORS)
+
+#### About OpenAI Configuration Issues
+
+> !! Note: 
+> * When using OpenAI, data will be sent to OpenAI servers, so operate with caution.
+> * Using OpenAI services will incur [costs](https://openai.com/api/pricing).
+
+If your local machine performance is insufficient, it is recommended to use OpenAI's GPT-4 series models, especially GPT-4o, for the best performance. You need to configure the [API KEY obtained from the official website](https://platform.openai.com/account/api-keys).
+
+## Contribution and Feedback
+
+Contributions and feedback are welcome!
+
+- **Submit Issues**: If you encounter problems or have suggestions for improvement, please submit an issue.
+- **Pull Requests**: If you would like to help us improve features, you are welcome to submit pull requests.
+- **Feedback and Contact**: We appreciate your valuable feedback, please contact us via GitHub.
+
+## Roadmap
+
+- Add support for Vault Mode
+- Support for vectorstore
+- Workspace management functionality for chat history
+- Built-in simple Embedding model for easy indexing
+
+## License
+
+This project is licensed under the Apache 2.0 License, see the [LICENSE](./LICENSE) file for details.

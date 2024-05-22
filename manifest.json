@@ -1,11 +1,11 @@
 {
 	"id": "private-ai-plugin",
 	"name": "PrivateAI",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Notebook AI Assistant, RAG Application, Ollama/OpenAI Support",
+	"author": "muzhi1991",
+	"authorUrl": "https://x.com/muzhi1991",
+	"fundingUrl": "https://buymeacoffee.com/muzhi1991",
 	"isDesktopOnly": false
 }
