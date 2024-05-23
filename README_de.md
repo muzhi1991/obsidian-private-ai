@@ -33,9 +33,9 @@ Das Plugin bietet drei Dialogmodi:
 
 ### Installationsschritte
 
-1. **Plugin herunterladen und installieren** (Noch nicht veröffentlicht, manuelle Installation wie folgt erforderlich)
+1. **Herunterladen und Installieren des Plugins** (Noch nicht veröffentlicht, empfohlen [die Beta-Version über das BRAT-Plugin zu installieren](#installation-der-brat-beta-version))
 
-   Suchen Sie im Obsidian-Plugin-Markt nach "PrivateAI" und klicken Sie auf Installieren, oder laden Sie das Plugin aus dem Release-Verzeichnis herunter und kopieren Sie dessen Inhalte in das Obsidian-Plugin-Verzeichnis (für die manuelle Installation siehe untenstehendes Kapitel). Nach Abschluss der Installation, denken Sie daran, das Plugin in den Einstellungen für Community-Plugins zu aktivieren.
+  Suchen Sie im Obsidian-Plugin-Markt nach "PrivateAI" und klicken Sie auf Installieren, oder beziehen Sie sich auf das unten stehende Kapitel, [installieren Sie die Beta-Version über das BRAT-Plugin](#installation-der-brat-beta-version). Nach der Installation vergessen Sie nicht, das Plugin in den Einstellungen für Community Plugins zu aktivieren.
 
 2. **Plugin konfigurieren**
 
@@ -60,7 +60,13 @@ Sie können die Plugin-Schnittstelle auf eine von zwei Arten aktivieren:
 * Klicken Sie in der linken Seitenleiste auf das Roboterbild <img style="float: right;" src="https://api.iconify.design/lucide:bot.svg">
 * Verwenden Sie `Cmd+p`, um das Befehlsfeld zu öffnen, geben Sie `privateai` ein, und 'Chatansicht öffnen' wird angezeigt.
 
-### Manuelle Installation
+#### Installation der BRAT-Beta-Version
+
+* Suchen Sie im Obsidian-Plugin-Markt nach BRAT und klicken Sie auf Installieren. Starten Sie nach der Installation das BRAT-Plugin.
+* Klicken Sie in den BRAT-Einstellungen auf "Add Beta Plugin" und geben Sie `https://github.com/muzhi1991/obsidian-private-ai` ein.
+* Klicken Sie auf "Add Plugin", um die Installation abzuschließen. Das Plugin wird automatisch aktiviert und Sie können es unter "PrivateAI" in den Einstellungen konfigurieren.
+
+#### Manuelle Installation
 
 * Navigieren Sie zum Verzeichnis `.obsidian/plugins` innerhalb Ihres Obsidian Vault, welches Sie unter 'Select open another Vault' in der unteren linken Ecke der Schnittstelle finden <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
 * Laden Sie die neueste Version aus dem [Release](https://github.com/muzhi1991/obsidian-private-ai/releases/latest) in das Verzeichnis .obsidian/plugins herunter, zum Beispiel, wenn das heruntergeladene Archiv obsidian-private-ai.tar.gz heißt, dann entpacken Sie es im Verzeichnis .obsidian/plugins.

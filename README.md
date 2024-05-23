@@ -39,9 +39,9 @@ The plugin offers three dialogue modes:
 
 ### Installation Steps
 
-1. **Download and Install the Plugin** (Not yet released, manual installation required as follows)
+1. **Download and Install the Plugin** (Not yet released, recommended to [install the Beta version via BRAT plugin](#installing-brat-beta-version))
 
-   Search for "PrivateAI" in the Obsidian plugin market and click install, or download the plugin from the release directory and copy its contents to the Obsidian plugin directory (for manual installation, see the section below). After completing the installation, remember to activate the plugin in the Community Plugins settings.
+  Search for "PrivateAI" in the Obsidian plugin market and click install, or refer to the section below, [install the Beta version via BRAT plugin](#installing-brat-beta-version). After installation, be sure to enable the plugin in the Community Plugins settings.
 
 2. **Configure the Plugin**
 
@@ -66,7 +66,13 @@ You can activate the plugin interface in one of two ways:
 * In the sidebar on the left, click the robot image <img style="float: right;" src="https://api.iconify.design/lucide:bot.svg">
 * Use `Cmd+p` to open the Command Panel, enter `privateai`, and 'Open Chat View' will appear.
 
-### Manual Installation
+#### Installing BRAT Beta Version
+
+* Search for BRAT in the Obsidian plugin market and click install. After installation, start the BRAT plugin.
+* In the BRAT settings, click "Add Beta Plugin" and enter `https://github.com/muzhi1991/obsidian-private-ai`.
+* Click "Add Plugin" to complete the installation. The plugin will automatically enable, and you can configure it under "PrivateAI" in the settings.
+
+#### Manual Installation
 
 * Navigate to the `.obsidian/plugins` directory inside your Obsidian Vault, which can be found under 'Select open another vault' at the bottom left corner of the interface <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
 * Download the latest version from the [release](https://github.com/muzhi1991/obsidian-private-ai/releases/latest) to the .obsidian/plugins directory, for example, if the downloaded archive is obsidian-private-ai.tar.gz, then extract it in the .obsidian/plugins directory.
@@ -77,7 +83,6 @@ You can activate the plugin interface in one of two ways:
   tar xvf obsidian-private-ai.tar.gz
 ```
 
-* enable plugin in setting
 ## FAQ
 
 #### How to Implement Local First

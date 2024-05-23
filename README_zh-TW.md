@@ -33,11 +33,11 @@ Obsidian PrivateAI 插件 (PrivateAI) 是一個創新的 Obsidian 插件，致�
 
 ### 安裝步驟
 
-1. **下載與安裝插件**（尚未發布，需要按照下面的方式手動安裝）
+**下載與安裝插件**（尚未發布，推薦[通過BRAT插件安裝Beta版本](#brat安裝beta版本)）
 
-   在 Obsidian 插件市場中搜尋 “PrivateAI” 並點擊安裝，或者從 release 目錄下載插件並將其內容複製到 Obsidian 插件目錄（手動安裝詳見下面的章節）。安裝完成後，記得在第三方插件設置（Community Plugins）中啟動插件。
+  在 Obsidian 插件市場中搜索 “PrivateAI” 並點擊安裝，或者參考下面章節，[通過BRAT插件安裝Beta版本](#brat安裝beta版本)。安裝完成後，記得在第三方插件設置（Community Plugins）中啟動插件。
 
-2. **配置插件**
+1. **配置插件**
 
    在 Obsidian 中進入設置頁面，找到 “PrivateAI” 插件，根據您的需求配置本地方案或 OpenAI 接口。
 
@@ -61,7 +61,13 @@ Obsidian PrivateAI 插件 (PrivateAI) 是一個創新的 Obsidian 插件，致�
 * 在左側的側欄，點擊機器人圖片 <img style="float: right;" src="https://api.iconify.design/lucide:bot.svg">
 * 使用 `Cmd+p` 呼出Command Panel，輸入 `privateai`，就會出現『打開聊天視圖』。
 
-### 手動安裝
+#### BRAT安裝Beta版本
+  
+* 在 Obsidian 插件市場中搜索 BRAT 並點擊安裝，安裝後啟動BRAT插件
+* 在BRAT的設置中點擊"Add Beta Plugin"，並輸入 `https://github.com/muzhi1991/obsidian-private-ai`
+* 點擊"Add Plugin"，完成安裝，插件會自動啟用，可以在設置中的"PrivateAI"中配置插件
+
+#### 手動安裝
 
 * 進入您的 Obsidian Vault目錄下的 `.obsidian/plugins` 目錄，您的Vault目錄請在『界面的左下角->打開其他倉庫』裡查看 <img style="float: right;" src="https://publish-01.obsidian.md/access/f786db9fac45774fa4f0d8112e232d67/Attachments/icons/obsidian-icon-vault-switcher.svg">
 * 從 [release](https://github.com/muzhi1991/obsidian-private-ai/releases/latest) 下載最新的版本到 .obsidian/plugins 目錄，例如下載的壓縮包是 obsidian-private-ai.tar.gz，然後在 .obsidian/plugins 目錄下解壓。

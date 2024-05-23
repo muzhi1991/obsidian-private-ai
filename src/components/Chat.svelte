@@ -7,6 +7,7 @@
 	import { renderMarkdown, renderCommentTextMarkdown } from "../utils/Utils";
 	import { ChatChainSingleton, QAChatChainSingleton } from "../utils/Chains";
 	import { scaleIn } from "../utils/Transition";
+	import { v4 as uuidv4 } from "uuid";
 
 	let div: HTMLDivElement;
 	let modeSelector: HTMLSelectElement;
@@ -182,7 +183,7 @@
 		console.log("key enter", value);
 		const file = $plugin.app.workspace.getActiveFile();
 		const comment: CommentType = {
-			id: crypto.randomUUID(),
+			id: uuidv4(),
 			author: "user",
 			text: value,
 			cnt: value.length,
@@ -192,7 +193,7 @@
 		// comments.push(comment)
 		// comments = comments
 		let reply = {
-			id: crypto.randomUUID(),
+			id: uuidv4(),
 			author: "bot",
 			text: "...",
 			cnt: 0,
