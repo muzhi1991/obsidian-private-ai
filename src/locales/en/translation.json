@@ -74,5 +74,10 @@
         "command_activate_view": "Open chat view",
         "input_placeholder": "Type your messages here",
         "bot_welcome": "You can ask me any questions!"
+    },
+    "prompt":{
+        "history_aware_gen_query":"Given the above conversation, generate a search query to look up in order to get information relevant to the conversation",
+        "qa":"The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.",
+        "context_qa":"Answer the user's questions based on the below context:\n\n{context}"
     }
 }

@@ -4,8 +4,8 @@
 	import axios, { isCancel, AxiosError } from "axios";
 	import { request, MarkdownView, Notice, setIcon } from "obsidian";
 	import { plugin } from "../store";
-	import { renderMarkdown, renderCommentTextMarkdown } from "../utils/Utils";
-	import { ChatChainSingleton, QAChatChainSingleton } from "../utils/Chains";
+	import { renderMarkdown } from "../utils/Utils";
+	import { ChatChainSingleton, QAChatChainSingleton,VaultChainSingleton } from "../utils/Chains";
 	import { scaleIn } from "../utils/Transition";
 	import { v4 as uuidv4 } from "uuid";
 
@@ -30,7 +30,7 @@
 	let comments: CommentType[] = [];
 
 	import { beforeUpdate, afterUpdate, tick } from "svelte";
-	import { ChatMode, EmbeddingServer, LLMServer } from "src/main";
+	import { ChatMode, EmbeddingServer, LLMServer } from "src/setting";
 
 	// 	// request("https://www.baidu.com")
 	// 	fetch("https://www.baidu.com", {
@@ -104,7 +104,7 @@
 				return false;
 			}
 
-			if (!settings.openaiConfig.embedding_model) {
+			if (!settings.openaiConfig.embeddingModel) {
 				new Notice($_.t("settings.error.openai_embedding_model_empty"));
 				return false;
 			}
@@ -114,7 +114,7 @@
 				new Notice($_.t("settings.error.ollama_base_url_empty"));
 				return false;
 			}
-			if (!settings.ollamaConfig.embedding_model) {
+			if (!settings.ollamaConfig.embeddingModel) {
 				new Notice($_.t("settings.error.ollama_embedding_model_empty"));
 				return false;
 			}
@@ -164,7 +164,7 @@
 				$plugin.settings.embeddingServer == EmbeddingServer.Ollama &&
 				$plugin.settings.chatMode != ChatMode.NaiveChat
 			)
-				model = $plugin.settings.ollamaConfig.embedding_model ?? "";
+				model = $plugin.settings.ollamaConfig.embeddingModel ?? "";
 			new Notice(
 				$_.t("settings.error.model_not_exists", {
 					model: model,
@@ -180,7 +180,7 @@
 	}
 
 	async function process(value: string) {
-		console.log("key enter", value);
+		console.debug("key enter", value);
 		const file = $plugin.app.workspace.getActiveFile();
 		const comment: CommentType = {
 			id: uuidv4(),
@@ -205,7 +205,11 @@
 		try {
 			let chain;
 			if ($plugin.settings.chatMode == ChatMode.NoteQa && file) {
+				console.debug(file.path,file.name,file.basename,file.extension,)
+				// chain = await VaultChainSingleton.getInstance(file.path);
 				chain = await QAChatChainSingleton.getInstance(file);
+			} else if($plugin.settings.chatMode==ChatMode.VaultQa){
+				chain = await VaultChainSingleton.getInstance("all");
 			} else {
 				chain = ChatChainSingleton.getInstance();
 				// console.log(chain.memory)
@@ -286,7 +290,7 @@
 		new Notice(
 			`${$_.t("settings.mode.title")} : ${getChatModeRecords()[selectedMode]}`,
 		);
-		console.log(`Selected mode: ${selectedMode}`);
+		console.debug(`Selected mode: ${selectedMode}`);
 	}
 	async function handleClick() {
 		if (!valid_config()) {
@@ -304,7 +308,7 @@
 	}
 
 	plugin.subscribe((value) => {
-		console.log("setting change", value.settings);
+		console.debug("setting change", value.settings);
 	});
 	function getInitWords() {
 		return $_.t("chat_view.bot_welcome");
