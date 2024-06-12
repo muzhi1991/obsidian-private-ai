@@ -2,20 +2,20 @@ import log from 'loglevel';
 import { Document } from '@langchain/core/documents';
 import { Embeddings } from '@langchain/core/embeddings';
 import { VectorStore } from '@langchain/core/vectorstores';
-import { create, insertMultiple, removeMultiple, updateMultiple, search, count } from '@orama/orama';
+import { create, insertMultiple, removeMultiple, save, load, search, count, type RawData } from '@orama/orama';
 import type { AnyOrama, Orama, Results, TypedDocument, WhereCondition } from '@orama/orama';
-import { persist, restore } from '@orama/plugin-data-persistence'
 import { plugin } from "../store";
 import { get } from 'svelte/store'
 import { normalizePath } from 'obsidian'
 import path from 'path-browserify'
+import { decode, encode } from '@msgpack/msgpack';
 
 
 const vectorStoreSchema = {
     id: 'string',
     source: 'string',
-    order: 'number',
-    header: 'string[]',
+    // order: 'number',
+    // header: 'string[]',
     content: 'string',
 } as const;
 
@@ -58,7 +58,6 @@ export class OramaStore extends VectorStore {
         if (await this.checkStorageExist()) {
             this.db = await this.restore()
         } else {
-            log.trace('not find local vectorstore storage, create new');
             this.db = await create({
                 schema: {
                     ...vectorStoreSchema,
@@ -67,6 +66,8 @@ export class OramaStore extends VectorStore {
                 id: indexName,
             });
         }
+
+
         //@ts-ignore
         // this.storageWorker=StorageWorker()
     }
@@ -91,18 +92,27 @@ export class OramaStore extends VectorStore {
         return pp
     }
     async persist() {
-        let bin: Buffer = await persist(this.db, 'binary') as Buffer
+        // let bin: Buffer = await persist(this.db, 'binary') as Buffer
+        const dbExport = await save(this.db)
+        let bin = encode(dbExport);
         let output = await this.getStoragePath()
         log.trace(`Persisting to local file;${output}, size:${bin.length}`)
         await get(plugin).app.vault.adapter.writeBinary(output, bin)
     }
 
     async restore() {
-        log.trace('Restoring vectorstore from backup');
+        log.debug('Restoring vectorstore from backup');
         let output = await this.getStoragePath()
         let binary = await get(plugin).app.vault.adapter.readBinary(output)
-        const newInstance = await restore('binary', Buffer.from(binary))
-        return newInstance
+        const dbExport = decode(binary) as RawData;
+        const db = await create({
+            schema: {
+                __placeholder: 'string'
+            }
+        })
+        await load(db, dbExport)
+        return db
+
         // vectorStoreBackup is an object and not an array for some reason
         // const docs = Object.keys(vectorStoreBackup.docs).map((key:any) => vectorStoreBackup.docs[key]);
         // await this.create(vectorStoreBackup.indexName, vectorStoreBackup.vectorSize);
@@ -116,13 +126,13 @@ export class OramaStore extends VectorStore {
     }
 
     async addVectors(vectors: number[][], documents: Document[]) {
-        log.trace("addVectors", documents)
+        log.trace("addVectors", vectors, documents)
         const docs: VectorDocument[] = documents.map((document, index) => ({
             id: document.metadata.hash,
             source: document.metadata.source,
             content: document.pageContent,
-            header: document.metadata.header,
-            order: document.metadata.order,
+            // header: document.metadata.header,
+            // order: document.metadata.order,
             embedding: vectors[index],
         }));
 
@@ -172,7 +182,7 @@ export class OramaStore extends VectorStore {
         return results.hits.map((result) => {
             return [
                 new Document({
-                    metadata: { source: result.document.source, order: result.document.order, header: result.document.header },
+                    metadata: { source: result.document.source },
                     pageContent: result.document.content,
                 }),
                 result.score,
@@ -200,7 +210,7 @@ export class OramaStore extends VectorStore {
         const embeddings = results.hits.map((result) => result.document.embedding)
         const docs = results.hits.map((result) => {
             return new Document({
-                metadata: { hash: result.document.id, source: result.document.source, order: result.document.order, header: result.document.header },
+                metadata: { hash: result.document.id, source: result.document.source },
                 pageContent: result.document.content,
             });
         });
@@ -219,7 +229,7 @@ export class OramaStore extends VectorStore {
         // })
         let { embeddings, docs } = await this.getDataByIds(ids)
         let newDocs = docs.map((doc) => new Document({
-            metadata: { hash: doc.metadata.hash, source: target, order: doc.metadata.order, header: doc.metadata.header },
+            metadata: { hash: doc.metadata.hash, source: target },
             pageContent: doc.pageContent,
         }))
         // const results: Results<VectorDocument> = await search(this.db, {

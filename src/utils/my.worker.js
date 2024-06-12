@@ -343,4 +343,3 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
   });
 });
 // sqlite3InitModule().then((sqlite3) => sqlite3.initWorker1API());
-export default {}

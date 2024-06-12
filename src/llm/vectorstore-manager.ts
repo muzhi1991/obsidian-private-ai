@@ -15,7 +15,7 @@ import {
   getEmbeddingModelParamFromSettings
 } from '../setting';
 
-import { plugin } from "../store";
+import { plugin, needUpdateDB } from "../store";
 import { get } from 'svelte/store'
 import {
   loadDocumentsFromPath,
@@ -146,6 +146,7 @@ export class VectoreStoreSingleton {
           cleanupMode = 'full'
         }
         await this.addDocsAndIndex(recordManager, vectorStore, documents, cleanupMode)
+        needUpdateDB.set(true)
       }
       log.debug("new vectorstore:", storeKey)
       this.instances.set(storeKey, { mtime: latestFileTime, vectorStore: vectorStore, recordManager: recordManager });

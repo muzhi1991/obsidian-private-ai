@@ -5,6 +5,7 @@ declare module '@sqlite.org/sqlite-wasm' {
 }
 
 type Sqlite3Worker = (type: string, args: { [key: string]: any }) => any;
+//@ts-ignore
 import WorkerScript from './my.worker.js'
 
 let DBWorker: Worker;
