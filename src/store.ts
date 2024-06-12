@@ -1,8 +1,9 @@
 import { writable } from "svelte/store";
-import type MyPlugin from "./main";
+import type PrivateAIPlugin from "./main";
 
-const plugin = writable<MyPlugin>();
+const plugin = writable<PrivateAIPlugin>();
 
+const needUpdateDB = writable<boolean>(false);
 
 
 // export type CommentType = {
@@ -13,4 +14,4 @@ const plugin = writable<MyPlugin>();
 // };
 // const comments= writable<CommentType[]>();
 
-export  { plugin };
+export  { plugin,needUpdateDB };

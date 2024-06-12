@@ -16,3 +16,9 @@ declare module "https://esm.sh/langchain/chains"
 declare module "https://esm.sh/langchain/memory"
 declare module "https://esm.sh/langchain/stores/message/in_memory"
 declare module "https://esm.sh/@langchain/core/runnables"
+declare module "sqlite3.wasm"
+
+declare module 'path-browserify' {
+    import path from 'path'
+    export default path
+  }

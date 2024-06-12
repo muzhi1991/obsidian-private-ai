@@ -106,10 +106,14 @@ Obsidian PrivateAI Plugin (PrivateAI) 是一个创新的 Obsidian 插件，致�
 - **反馈与联系**: 感谢您的宝贵反馈，请通过 GitHub 联系我们。
 
 ## Roadmap
-
+- 基础功能
+  - clear历史记录按钮
+  - 切换模式后使用当前上下问对话
+  - prompt配置功能
 - 增加知识库模型支持
 - 支持向量数据库
 - Chat 记录的 Workspace 管理功能
+  - 使用恢复的上下文对话
 - 内置简易 Embedding 模型，方便直接索引
 
 ## License

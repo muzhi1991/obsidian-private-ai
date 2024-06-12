@@ -38,13 +38,10 @@ i18next.init({
   }
 });
 
-// i18next.addResourceBundle('en', 'namespace1', {
-//     key: 'hello from namespace 1'
-//   });
 
 export const i18n = createI18nStore(i18next);
 
-import { ChatMode } from './main';
+import { ChatMode } from './setting';
 import { get } from 'svelte/store';
 import { writable } from "svelte/store";
 
@@ -58,6 +55,6 @@ export function getChatModeRecords() {
   return chatModeRecords
 }
 
-// export const chatModeRecords = writable< Record<ChatMode, string>>(getChatModeRecords());
+export const DB_FILE_NAME = "/private_ai_db"
 
 export default i18n;

@@ -254,11 +254,14 @@ Question: {input}`);
 			retriever: historyAwareRetrieverChain,
 			combineDocsChain: historyAwareCombineDocsChain,
 		});
-		let messageHistory=new ChatMessageHistory()
-		console.log("messageHistory:",JSON.stringify(await messageHistory.getMessages(), null, 2))
+		let messageHistory = new ChatMessageHistory();
+		console.log(
+			"messageHistory:",
+			JSON.stringify(await messageHistory.getMessages(), null, 2),
+		);
 		const chainWithHistory = new RunnableWithMessageHistory({
 			runnable: conversationalRetrievalChain,
-			getMessageHistory: (sessionID: string)=> messageHistory,
+			getMessageHistory: (sessionID: string) => messageHistory,
 			inputMessagesKey: "input",
 			historyMessagesKey: "chat_history",
 			outputMessagesKey: "answer",
@@ -366,16 +369,22 @@ Question: {input}`);
 		// console.log(await chat("你好啊"))
 		// console.log(await chat("重复我上一句话"))
 		let his_chain = await retrieve_history_chain(url);
-		let res1 = await his_chain.invoke({
-			// chat_history: chatHistory,
-			input: "Who are you?",
-		},{configurable:{sessionId: "foobarbaz"}});
+		let res1 = await his_chain.invoke(
+			{
+				// chat_history: chatHistory,
+				input: "Who are you?",
+			},
+			{ configurable: { sessionId: "foobarbaz" } },
+		);
 		console.log(JSON.stringify(res1, null, 2));
 
-		let res2 = await his_chain.invoke({
-			// chat_history: chatHistory,
-			input: "repeat my previous word",
-		},{configurable:{sessionId: "foobarbaz"}});
+		let res2 = await his_chain.invoke(
+			{
+				// chat_history: chatHistory,
+				input: "repeat my previous word",
+			},
+			{ configurable: { sessionId: "foobarbaz" } },
+		);
 		console.log(JSON.stringify(res2, null, 2));
 	}
 	// test();

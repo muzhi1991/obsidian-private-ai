@@ -1,12 +1,18 @@
 <script lang="ts">
+	import log from "loglevel";
+	import _ from "../config";
 	import { fade } from "svelte/transition";
 	import { cubicOut } from "svelte/easing";
 	import axios, { isCancel, AxiosError } from "axios";
 	import { request, MarkdownView, Notice, setIcon } from "obsidian";
 	import { plugin } from "../store";
-	import { renderMarkdown, renderCommentTextMarkdown } from "../utils/Utils";
-	import { ChatChainSingleton, QAChatChainSingleton } from "../utils/Chains";
-	import { scaleIn } from "../utils/Transition";
+	import { renderMarkdown } from "../utils/obsidian-ui-utils";
+	import {
+		ChatChainSingleton,
+		QAChatChainSingleton,
+		VaultChainSingleton,
+	} from "../llm/chains";
+	import { scaleIn } from "../utils/transition";
 	import { v4 as uuidv4 } from "uuid";
 
 	let div: HTMLDivElement;
@@ -15,7 +21,6 @@
 	let sendButton: HTMLButtonElement;
 	let autoscroll = false;
 
-	import _ from "../config";
 	import { getChatModeRecords } from "../config";
 
 	type CommentType = {
@@ -24,13 +29,10 @@
 		text: string;
 		cnt: number;
 	};
-	// const comments= writable<CommentType[]>();
-	// const coms: CommentType[]=[]
-	// comments.set(coms)
 	let comments: CommentType[] = [];
 
 	import { beforeUpdate, afterUpdate, tick } from "svelte";
-	import { ChatMode, EmbeddingServer, LLMServer } from "src/main";
+	import { ChatMode, EmbeddingServer, LLMServer } from "src/setting";
 
 	// 	// request("https://www.baidu.com")
 	// 	fetch("https://www.baidu.com", {
@@ -46,16 +48,13 @@
 	// 		.catch((e) => console.log("error", e.message, e.toString()));
 
 	beforeUpdate(() => {
-		// console.debug("beforeUpdate");
 		if (div) {
 			const scrollableDistance = div.scrollHeight - div.offsetHeight;
-			// console.debug(div.scrollTop, scrollableDistance);
 			autoscroll = div.scrollTop > scrollableDistance - 20;
 		}
 	});
 
 	afterUpdate(() => {
-		// console.debug("afterUpdate");
 		if (autoscroll) {
 			div.scrollTo(0, div.scrollHeight);
 		}
@@ -104,7 +103,7 @@
 				return false;
 			}
 
-			if (!settings.openaiConfig.embedding_model) {
+			if (!settings.openaiConfig.embeddingModel) {
 				new Notice($_.t("settings.error.openai_embedding_model_empty"));
 				return false;
 			}
@@ -114,7 +113,7 @@
 				new Notice($_.t("settings.error.ollama_base_url_empty"));
 				return false;
 			}
-			if (!settings.ollamaConfig.embedding_model) {
+			if (!settings.ollamaConfig.embeddingModel) {
 				new Notice($_.t("settings.error.ollama_embedding_model_empty"));
 				return false;
 			}
@@ -164,7 +163,7 @@
 				$plugin.settings.embeddingServer == EmbeddingServer.Ollama &&
 				$plugin.settings.chatMode != ChatMode.NaiveChat
 			)
-				model = $plugin.settings.ollamaConfig.embedding_model ?? "";
+				model = $plugin.settings.ollamaConfig.embeddingModel ?? "";
 			new Notice(
 				$_.t("settings.error.model_not_exists", {
 					model: model,
@@ -180,7 +179,7 @@
 	}
 
 	async function process(value: string) {
-		console.log("key enter", value);
+		log.debug("user input:", value);
 		const file = $plugin.app.workspace.getActiveFile();
 		const comment: CommentType = {
 			id: uuidv4(),
@@ -205,10 +204,12 @@
 		try {
 			let chain;
 			if ($plugin.settings.chatMode == ChatMode.NoteQa && file) {
-				chain = await QAChatChainSingleton.getInstance(file);
+				log.debug(file.path, file.name, file.basename, file.extension);
+				chain = await QAChatChainSingleton.getInstance(file.path);
+			} else if ($plugin.settings.chatMode == ChatMode.VaultQa) {
+				chain = await VaultChainSingleton.getInstance("all");
 			} else {
 				chain = ChatChainSingleton.getInstance();
-				// console.log(chain.memory)
 			}
 			let stream = await chain.stream(
 				{ input: comment.text },
@@ -216,12 +217,11 @@
 			);
 
 			for await (const chunk of stream) {
-				console.debug(JSON.stringify(chunk, null, 2));
-				console.debug("------");
+				// log.debug(JSON.stringify(chunk, null, 2));
+				// log.debug("------");
 				if (chunk) {
 					// let c = comments.pop();
 					let c = reply;
-					// console.log("reply",c.text,comments[comments.length-1])
 					if (c) {
 						if (c.cnt == 0) {
 							c.text = chunk;
@@ -237,7 +237,7 @@
 			}
 			textArea.value = "";
 		} catch (error) {
-			console.error({ error });
+			log.error({ error });
 			comments.pop(); // reply
 			comments.pop(); // comment
 			comments = comments;
@@ -250,7 +250,7 @@
 		if (key === "Enter" && (event.target as HTMLInputElement).value) {
 			if (!(shiftKey || metaKey)) {
 				event.preventDefault();
-				textArea.disabled=true;
+				textArea.disabled = true;
 				setIcon(sendButton, "loader");
 				sendButton.disabled = true;
 
@@ -258,19 +258,16 @@
 				textArea.value = "";
 				let target = event.target as HTMLInputElement;
 				target.value = "";
-				
+
 				if (!valid_config()) {
 					return;
 				}
 				if (value.trim() !== "") {
-					
 					textArea.value = "";
-					
-					
 					await process(value);
 				}
-				textArea.disabled = false
-				textArea.focus()
+				textArea.disabled = false;
+				textArea.focus();
 				sendButton.disabled = false;
 				setIcon(sendButton, "send");
 			}
@@ -286,7 +283,6 @@
 		new Notice(
 			`${$_.t("settings.mode.title")} : ${getChatModeRecords()[selectedMode]}`,
 		);
-		console.log(`Selected mode: ${selectedMode}`);
 	}
 	async function handleClick() {
 		if (!valid_config()) {
@@ -303,18 +299,14 @@
 		textArea.style.height = `${textArea.scrollHeight}px`;
 	}
 
-	plugin.subscribe((value) => {
-		console.log("setting change", value.settings);
-	});
 	function getInitWords() {
 		return $_.t("chat_view.bot_welcome");
 	}
-	$:initWords = $_.t("chat_view.bot_welcome");
-	let chatModeRecords = getChatModeRecords()
+	$: initWords = $_.t("chat_view.bot_welcome");
+	let chatModeRecords = getChatModeRecords();
 	$: if ($plugin) {
-		chatModeRecords = getChatModeRecords()
+		chatModeRecords = getChatModeRecords();
 	}
-	
 </script>
 
 <div class="container">
@@ -335,7 +327,7 @@
 			{/each}
 		</select>
 	</div>
-	<hr class="solid">
+	<hr class="solid" />
 
 	<div class="chat" bind:this={div}>
 		<article class="bot">
@@ -408,6 +400,4 @@
 		font-size: 1.4em;
 		text-align: left;
 	} */
-
-	
 </style>
