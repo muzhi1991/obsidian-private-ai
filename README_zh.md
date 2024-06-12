@@ -17,7 +17,7 @@ Obsidian PrivateAI Plugin (PrivateAI) 是一个创新的 Obsidian 插件，致�
 
 * **NativeQA**: 与模型直接对话，适用于一般性问题回答。
 * **NoteQA**: 使用当前打开的笔记作为上下文与模型对话，帮助深入理解和拓展笔记内容。
-* **VaultQA**: （即将推出）跨越 Vault 中所有笔记对话，进行智能总结和知识提取。
+* **VaultQA**: 跨越 Vault 中所有笔记对话，进行智能总结和知识提取。
 
 ## 界面预览
 
@@ -108,10 +108,7 @@ Obsidian PrivateAI Plugin (PrivateAI) 是一个创新的 Obsidian 插件，致�
 ## Roadmap
 - 基础功能
   - clear历史记录按钮
-  - 切换模式后使用当前上下问对话
   - prompt配置功能
-- 增加知识库模型支持
-- 支持向量数据库
 - Chat 记录的 Workspace 管理功能
   - 使用恢复的上下文对话
 - 内置简易 Embedding 模型，方便直接索引

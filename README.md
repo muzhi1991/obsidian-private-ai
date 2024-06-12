@@ -23,7 +23,7 @@ The plugin offers three dialogue modes:
 
 * **NativeQA**: Direct conversation with the model, suitable for general question answering.
 * **NoteQA**: Uses the currently open note as context to converse with the model, helping in-depth understanding and expansion of the note content.
-* **VaultQA**: (Coming soon) Cross-note dialogue within the Vault for intelligent summarization and knowledge extraction.
+* **VaultQA**: Cross-note dialogue within the Vault for intelligent summarization and knowledge extraction.
 
 ## Interface Preview
 
@@ -112,8 +112,6 @@ Contributions and feedback are welcome!
 
 ## Roadmap
 
-- Add support for Vault Mode
-- Support for vectorstore
 - Workspace management functionality for chat history
 - Built-in simple Embedding model for easy indexing
 

@@ -17,7 +17,7 @@ Das Plugin bietet drei Dialogmodi:
 
 * **NativeQA**: Direktes Gespräch mit dem Modell, geeignet für allgemeine Fragestellungen.
 * **NoteQA**: Nutzt die aktuell geöffnete Notiz als Kontext, um mit dem Modell zu kommunizieren, was ein tiefes Verständnis und eine Erweiterung des Notizinhalts ermöglicht.
-* **VaultQA**: (Demnächst) Cross-Note-Dialog innerhalb des Vaults zur intelligenten Zusammenfassung und Wissensextraktion.
+* **VaultQA**: Cross-Note-Dialog innerhalb des Vaults zur intelligenten Zusammenfassung und Wissensextraktion.
 
 ## Schnittstellen-Vorschau
 
@@ -106,8 +106,6 @@ Beiträge und Feedback sind willkommen!
 
 ## Fahrplan
 
-- Unterstützung für Vault-Modus hinzufügen
-- Unterstützung für Vectorstore
 - Workspace-Management-Funktionalität für Chat-Verlauf
 - Eingebautes einfaches Embedding-Modell für einfache Indexierung
 
