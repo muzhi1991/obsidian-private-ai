@@ -1,7 +1,7 @@
-import  { RecordManager } from "@langchain/community/indexes/base";
-import  type {RecordManagerInterface, UpdateOptions,ListKeyOptions} from "@langchain/community/indexes/base";
-import {DatabaseManager,Statement} from "./SqliteDatabase"
-import { escape_single_quote } from './Utils';
+import log from 'loglevel';
+import type { RecordManagerInterface, UpdateOptions, ListKeyOptions } from "@langchain/community/indexes/base";
+import { DatabaseManager, Statement } from "./sqlite-db"
+import { escapeSingleQuote } from './string-utils';
 
 
 interface TimeRow {
@@ -30,7 +30,7 @@ export class SqlitWorker2RecordManager implements RecordManagerInterface {
 
   async createSchema(): Promise<void> {
     try {
-    await this.db.prepare(`
+      await this.db.prepare(`
 CREATE TABLE IF NOT EXISTS "${this.tableName}" (
   uuid TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
   key TEXT NOT NULL,
@@ -44,7 +44,7 @@ CREATE INDEX IF NOT EXISTS key_index ON "${this.tableName}" (key);
 CREATE INDEX IF NOT EXISTS namespace_index ON "${this.tableName}" (namespace);
 CREATE INDEX IF NOT EXISTS group_id_index ON "${this.tableName}" (group_id);`).run();
     } catch (error) {
-      console.error("Error creating schema");
+      log.error("Error creating schema");
       throw error; // Re-throw the error to let the caller handle it
     }
   }
@@ -58,9 +58,16 @@ CREATE INDEX IF NOT EXISTS group_id_index ON "${this.tableName}" (group_id);`).r
       const { epoch } = timeRow;
       return Number(epoch);
     } catch (error) {
-      console.error("Error getting time in SQLiteRecordManager:");
+      log.error("Error getting time in SQLiteRecordManager:");
       throw error;
     }
+  }
+
+  async getCount() {
+    return await this.db.prepare(`select count(1) from "${this.tableName}"`).get();
+  }
+  async getLatestUpdateSecondTime() {
+    return await this.db.prepare(`select max(updated_at) from "${this.tableName}"`).get()
   }
 
   async update(keys: string[], updateOptions?: UpdateOptions): Promise<void> {
@@ -93,11 +100,11 @@ CREATE INDEX IF NOT EXISTS group_id_index ON "${this.tableName}" (group_id);`).r
     ]);
 
     // Consider using a transaction for batch operations
-    let sqls:Statement[]=[]
+    let sqls: Statement[] = []
     for (const row of recordsToUpsert) {
-            sqls.push(this.db.prepare(`
+      sqls.push(this.db.prepare(`
             INSERT INTO "${this.tableName}" (key, namespace, updated_at, group_id)
-            VALUES ('${row[0]}', '${row[1]}', ${row[2]}, '${row[3] === null ? null : escape_single_quote(row[3] as string)}')
+            VALUES ('${row[0]}', '${row[1]}', ${row[2]}, '${row[3] === null ? null : escapeSingleQuote(row[3] as string)}')
             ON CONFLICT (key, namespace) DO UPDATE SET updated_at = excluded.updated_at`))
     }
     await this.db.transaction(sqls)
@@ -124,52 +131,20 @@ WHERE namespace = ? AND key IN (${placeholders})`;
       // Execute the query
       const rows = (await this.db
         .prepare(sql)
-        .all(this.namespace, ...keys)).map((v)=>({ key: v })) as KeyRecord[];
+        .all(this.namespace, ...keys)).map((v) => ({ key: v })) as KeyRecord[];
       // Create a set of existing keys for faster lookup
       const existingKeysSet = new Set(rows.map((row) => row.key));
       // Map the input keys to booleans indicating if they exist
       keys.forEach((key, index) => {
         existsArray[index] = existingKeysSet.has(key);
       });
-      console.debug("cache exists:",existingKeysSet,keys,existsArray)
+      log.trace("cache exists:", existingKeysSet, keys, existsArray)
       return existsArray;
     } catch (error) {
-      console.error("Error checking existence of keys");
+      log.error("Error checking existence of keys");
       throw error; // Allow the caller to handle the error
     }
   }
-
-//   async exists(keys: string[]): Promise<boolean[]> {
-//     if (keys.length === 0) {
-//       return [];
-//     }
-
-//     // Prepare the placeholders and the query
-//     const keyStr = keys.map((v)=>`'${v}'`).join(", ");
-//     const sql = `
-// SELECT key
-// FROM "${this.tableName}"
-// WHERE namespace = '${this.namespace}' AND key IN (${keyStr})`;
-
-//     // Initialize an array to fill with the existence checks
-//     const existsArray = new Array(keys.length).fill(false);
-
-//     try {
-//       // Execute the query
-//       const rows = await this.db
-//           .prepare(sql).all() as unknown as KeyRecord[];
-//       // Create a set of existing keys for faster lookup
-//       const existingKeysSet = new Set(rows.map((row) => row.key));
-//       // Map the input keys to booleans indicating if they exist
-//       keys.forEach((key, index) => {
-//         existsArray[index] = existingKeysSet.has(key);
-//       });
-//       return existsArray;
-//     } catch (error) {
-//       console.error("Error checking existence of keys");
-//       throw error; // Allow the caller to handle the error
-//     }
-//   }
 
   async listKeys(options?: ListKeyOptions): Promise<string[]> {
     const { before, after, limit, groupIds } = options ?? {};
@@ -203,53 +178,13 @@ WHERE namespace = ? AND key IN (${placeholders})`;
 
     // Directly using try/catch with async/await for cleaner flow
     try {
-      const result = (await this.db.prepare(query).all(...values)).map((v)=>({ key: v }));
+      const result = (await this.db.prepare(query).all(...values)).map((v) => ({ key: v }));
       return result.map((row) => row.key);
     } catch (error) {
-      console.error("Error listing keys.");
+      log.error("Error listing keys.");
       throw error; // Re-throw the error to be handled by the caller
     }
   }
-
-  // async listKeys(options?: ListKeyOptions): Promise<string[]> {
-  //   const { before, after, limit, groupIds } = options ?? {};
-  //   let query = `SELECT key FROM "${this.tableName}" WHERE namespace = '${this.namespace}'`;
-  //   const values: (string | number | string[])[] = [this.namespace];
-
-  //   if (before) {
-  //     query += ` AND updated_at < ${before}`;
-  //     values.push(before);
-  //   }
-
-  //   if (after) {
-  //     query += ` AND updated_at > ${after}`;
-  //     values.push(after);
-  //   }
-
-  //   if (limit) {
-  //     query += ` LIMIT ${limit}`;
-  //     values.push(limit);
-  //   }
-
-  //   if (groupIds && Array.isArray(groupIds)) {
-  //     query += ` AND group_id IN (${groupIds
-  //       .filter((gid) => gid !== null)
-  //       .map((v) => `'${v}'`)
-  //       .join(", ")})`;
-  //   //   values.push(...groupIds.filter((gid): gid is string => gid !== null));
-  //   }
-
-  //   query += ";";
-
-  //   // Directly using try/catch with async/await for cleaner flow
-  //   try {
-  //     const result = (await this.db.prepare(query).all()).map((v)=>({ key: v }));
-  //     return result.map((row) => row.key);
-  //   } catch (error) {
-  //     console.error("Error listing keys.");
-  //     throw error; // Re-throw the error to be handled by the caller
-  //   }
-  // }
 
   async deleteKeys(keys: string[]): Promise<void> {
     if (keys.length === 0) {
@@ -266,28 +201,15 @@ WHERE namespace = ? AND key IN (${placeholders})`;
     try {
       await this.db.prepare(query).run(...values);
     } catch (error) {
-      console.error("Error deleting keys");
+      log.error("Error deleting keys");
       throw error; // Re-throw the error to be handled by the caller
     }
   }
 
-  // async deleteKeys(keys: string[]): Promise<void> {
-  //   if (keys.length === 0) {
-  //     return;
-  //   }
+  async clear() {
+    let res = await this.db.prepare(`DROP TABLE "${this.tableName}"`).run();
+    log.trace("delete table res:", res)
+    await this.createSchema()
+  }
 
-  //   const keyStr = keys.join(", ");
-  //   const query = `DELETE FROM "${this.tableName}" WHERE namespace = '${this.namespace}' AND key IN (${keyStr});`;
-  //   // const values = [this.namespace, ...keys].map((v) =>
-  //   //   typeof v !== "string" ? `${v}` : v
-  //   // );
-
-  //   // Directly using try/catch with async/await for cleaner flow
-  //   try {
-  //     await this.db.prepare(query).run()
-  //   } catch (error) {
-  //     console.error("Error deleting keys");
-  //     throw error; // Re-throw the error to be handled by the caller
-  //   }
-  // }
 }

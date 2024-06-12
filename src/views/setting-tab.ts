@@ -1,10 +1,11 @@
+import log from 'loglevel';
 import { App, Notice, PluginSettingTab, Setting, ToggleComponent, Modal } from 'obsidian';
 import { plugin } from "../store";
 import { get } from 'svelte/store';
 import PrivateAIPlugin from '../main';
 import { ChatMode, LLMServer, EmbeddingServer, SUPPORT_MODELS, EMBEDDING_SUPPORT_MODELS } from '../setting';
 import { i18n, getChatModeRecords } from '../config';
-import { fragWithHTML } from '../utils/Utils'
+import { fragWithHTML } from '../utils/obsidian-ui-utils'
 
 // 	animation: shake .1s linear;
 // animation-iteration-count: 3;
@@ -37,7 +38,7 @@ export class SettingTab extends PluginSettingTab {
 	}
 
 	addCommonOpenAISetting(containerEl: HTMLElement) {
-		console.log("add common open ai setting")
+		log.debug("add common open ai setting")
 		let s1 = new Setting(containerEl)
 			.setName(fragWithHTML(get(i18n).t("settings.openai.api_key")))
 			.setDesc(fragWithHTML(get(i18n).t("settings.openai.api_key_desc")))
@@ -200,8 +201,8 @@ export class SettingTab extends PluginSettingTab {
 						.setValue(this.plugin.settings.openaiConfig.model ?? '')
 						.onChange(async (value) => {
 							this.plugin.settings.openaiConfig.model = value;
-							if(value in SUPPORT_MODELS){
-								this.plugin.settings.openaiConfig.modelParam=SUPPORT_MODELS[value]
+							if (value in SUPPORT_MODELS) {
+								this.plugin.settings.openaiConfig.modelParam = SUPPORT_MODELS[value]
 							}
 							await this.plugin.saveSettings();
 							this.showEmptyInputError(text.inputEl)
@@ -210,12 +211,12 @@ export class SettingTab extends PluginSettingTab {
 					// 失去焦点，检测值的正确性
 					text.inputEl.onblur = () => {
 						let model = this.plugin.settings.openaiConfig.model ?? ""
-						if (! (model in SUPPORT_MODELS)) {
+						if (!(model in SUPPORT_MODELS)) {
 							new ModelCheckModal(this.app, Object.keys(SUPPORT_MODELS)).open();
 						}
 					}
 				});
-			console.log("model:", this.plugin.settings.openaiConfig.model)
+			log.debug("model:", this.plugin.settings.openaiConfig.model)
 
 			let model = this.plugin.settings.openaiConfig.model
 			if (!model) {
@@ -249,7 +250,7 @@ export class SettingTab extends PluginSettingTab {
 					// 	}
 					// }
 				});
-			console.log("model:", this.plugin.settings.ollamaConfig.model)
+			log.debug("model:", this.plugin.settings.ollamaConfig.model)
 			let model = this.plugin.settings.ollamaConfig.model
 			if (!model) {
 				// containerEl.inputEl.addClass('error');
@@ -293,8 +294,8 @@ export class SettingTab extends PluginSettingTab {
 						.setValue(this.plugin.settings.openaiConfig.embeddingModel ?? '')
 						.onChange(async (value) => {
 							this.plugin.settings.openaiConfig.embeddingModel = value;
-							if(value in EMBEDDING_SUPPORT_MODELS){
-								this.plugin.settings.openaiConfig.embeddingModelParam=EMBEDDING_SUPPORT_MODELS[value]
+							if (value in EMBEDDING_SUPPORT_MODELS) {
+								this.plugin.settings.openaiConfig.embeddingModelParam = EMBEDDING_SUPPORT_MODELS[value]
 							}
 							await this.plugin.saveSettings();
 							this.showEmptyInputError(text.inputEl)
@@ -303,7 +304,7 @@ export class SettingTab extends PluginSettingTab {
 					// 失去焦点，检测值的正确性
 					text.inputEl.onblur = () => {
 						let model = this.plugin.settings.openaiConfig.embeddingModel ?? ""
-						if (! (model in EMBEDDING_SUPPORT_MODELS)) {
+						if (!(model in EMBEDDING_SUPPORT_MODELS)) {
 							new ModelCheckModal(this.app, Object.keys(EMBEDDING_SUPPORT_MODELS)).open();
 						}
 					}
@@ -332,7 +333,7 @@ export class SettingTab extends PluginSettingTab {
 						.onChange(async (value) => {
 							this.plugin.settings.ollamaConfig.embeddingModel = value;
 							await this.plugin.saveSettings();
-							console.log("onChange", text.inputEl.value)
+							log.debug("onChange", text.inputEl.value)
 							this.showEmptyInputError(text.inputEl)
 						})
 					// 失去焦点，检测值的正确性
@@ -340,7 +341,7 @@ export class SettingTab extends PluginSettingTab {
 					// 	let embedding_model = this.plugin.settings.ollamaConfig.embedding_model
 					// }
 				});
-			console.log(s.controlEl.getElementsByTagName("input"), s.controlEl.childNodes)
+			log.debug(s.controlEl.getElementsByTagName("input"), s.controlEl.childNodes)
 			let embedding_model = this.plugin.settings.ollamaConfig.embeddingModel
 			if (!embedding_model) {
 				// containerEl.inputEl.addClass('error');

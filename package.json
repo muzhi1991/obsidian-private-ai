@@ -30,6 +30,8 @@
 		"@langchain/community": "^0.0.55",
 		"@langchain/core": "^0.1.62",
 		"@langchain/openai": "^0.0.28",
+		"@orama/orama": "^2.0.19",
+		"@orama/plugin-data-persistence": "^2.0.19",
 		"@sqlite.org/sqlite-wasm": "^3.46.0-build2",
 		"@types/uuid": "^9.0.8",
 		"axios": "^1.6.8",
@@ -37,6 +39,8 @@
 		"esbuild-plugin-inline-worker": "^0.1.1",
 		"i18next": "^23.11.3",
 		"langchain": "^0.1.36",
+		"loglevel": "^1.9.1",
+		"path-browserify": "^1.0.1",
 		"svelte-i18next": "^2.2.2",
 		"uuid": "^9.0.1"
 	}

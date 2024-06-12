@@ -38,9 +38,6 @@ i18next.init({
   }
 });
 
-// i18next.addResourceBundle('en', 'namespace1', {
-//     key: 'hello from namespace 1'
-//   });
 
 export const i18n = createI18nStore(i18next);
 
@@ -58,8 +55,6 @@ export function getChatModeRecords() {
   return chatModeRecords
 }
 
-export const DB_FILE_NAME="/private_ai_db"
-
-// export const chatModeRecords = writable< Record<ChatMode, string>>(getChatModeRecords());
+export const DB_FILE_NAME = "/private_ai_db"
 
 export default i18n;

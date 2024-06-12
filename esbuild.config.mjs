@@ -101,7 +101,6 @@ const context = await esbuild.context({
       		target: "es2022",
 			minify: false,
 			plugins:[
-			
 				{
 					name: 'sqlite-wasm-binary-loader',
 					setup(build) {
@@ -168,7 +167,7 @@ const context = await esbuild.context({
 	// 	".wasm":"binary"
 	// },
 	define:{
-		'process.env.LANGCHAIN_VERBOSE': '"true"',
+		'process.env.LANGCHAIN_VERBOSE': '"false"',
 	},
 });
 

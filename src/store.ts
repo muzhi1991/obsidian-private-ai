@@ -3,6 +3,7 @@ import type PrivateAIPlugin from "./main";
 
 const plugin = writable<PrivateAIPlugin>();
 
+const needUpdateDB = writable<boolean>(false);
 
 
 // export type CommentType = {
@@ -13,4 +14,4 @@ const plugin = writable<PrivateAIPlugin>();
 // };
 // const comments= writable<CommentType[]>();
 
-export  { plugin };
+export  { plugin,needUpdateDB };

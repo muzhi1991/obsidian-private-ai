@@ -32,6 +32,7 @@
     directory from which `sqlite3.js` will be loaded.
 */
 
+import log from 'loglevel';
 
 import { default as sqlite3InitModule } from 'node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3-bundler-friendly.mjs';
 import sqlite3Wasm from 'node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3.wasm'
@@ -39,7 +40,7 @@ import sqlite3Wasm from 'node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm
 const OPFS_POOL_NAME='private-ai-opfs'
 
 sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, prefix) { return '' } }).then((sqlite3) => {
-  console.log("opfs:", sqlite3.capi.sqlite3_vfs_find("opfs"), sqlite3.oo1.OpfsDb)
+  log.debug("opfs:", sqlite3.capi.sqlite3_vfs_find("opfs"), sqlite3.oo1.OpfsDb)
  
   
   sqlite3.initWorker2API = function (poolUtil) {
@@ -52,7 +53,6 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
     }
     const sqlite3 = this.sqlite3 || toss('Missing this.sqlite3 object.');
     const DB = poolUtil.OpfsSAHPoolDb //sqlite3.oo1.DB;
-    console.log("!!sqlite3",sqlite3)
 
     const getDbId = function (db) {
       let id = wState.idMap.get(db);
@@ -72,7 +72,7 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
 
       xfer: [],
       open: function (opt) {
-        console.log("!!!!","now open db:",DB,opt)
+        log.debug("!!!!","now open db:",DB,opt)
         const db = new DB(opt);
         this.dbs[getDbId(db)] = db;
         if (this.dbList.indexOf(db) < 0) this.dbList.push(db);
@@ -82,8 +82,8 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
         if (db) {
           delete this.dbs[getDbId(db)];
           const filename = db.filename;
-          console.log("!!close",sqlite3.wasm)
-          console.log(sqlite3.wasm.exports)
+          log.debug("!!close",sqlite3.wasm)
+          log.debug(sqlite3.wasm.exports)
 
           const pVfs = sqlite3.wasm.exports.sqlite3__wasm_db_vfs(db.pointer, 0);
           db.close();
@@ -94,7 +94,7 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
           }
         }
         // if(globalThis.PoolUtil){
-        //   console.log("close PoolUtil",globalThis.PoolUtil )
+        //   log.log("close PoolUtil",globalThis.PoolUtil )
         //   globalThis.PoolUtil.removeVfs()
         // }
       },
@@ -334,12 +334,12 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
     // is a subclass of sqlite3.oo1.DB to simplify usage with
     // the oo1 API.
     // const db = new PoolUtil.OpfsSAHPoolDb('/my_test_db');
-    console.debug("installOpfsSAHPoolVfs: create poolUtil")
+    log.debug("installOpfsSAHPoolVfs: create poolUtil")
     sqlite3.initWorker2API(poolUtil)
     globalThis.PoolUtil=poolUtil
 
   }).catch(function (err) {
-    console.error("installOpfsSAHPoolVfs:", err);
+    log.error("installOpfsSAHPoolVfs:", err);
   });
 });
 // sqlite3InitModule().then((sqlite3) => sqlite3.initWorker1API());
