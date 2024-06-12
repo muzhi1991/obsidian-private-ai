@@ -70,5 +70,10 @@
         "command_activate_view": "Chat-Ansicht öffnen",
         "input_placeholder": "Tippen Sie Ihre Nachrichten hier ein",
         "bot_welcome": "Sie können mir alle Fragen stellen!"
+    },
+    "prompt":{
+        "history_aware_gen_query":"Angesichts des obigen Gesprächs, erstellen Sie eine Suchanfrage, um Informationen zu erhalten, die für das Gespräch relevant sind.",
+        "qa":"Das folgende ist ein freundliches Gespräch zwischen einem Menschen und einer KI. Die KI ist gesprächig und liefert viele spezifische Details aus ihrem Kontext. Wenn die KI die Antwort auf eine Frage nicht kennt, sagt sie wahrheitsgemäß, dass sie es nicht weiß.",
+        "context_qa":"Beantworten Sie die Fragen des Benutzers basierend auf dem unten stehenden Kontext:\n\n{context}"
     }
 }

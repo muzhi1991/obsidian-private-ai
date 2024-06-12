@@ -70,5 +70,10 @@
         "command_activate_view": "開啟聊天視圖",
         "input_placeholder": "在此輸入你的消息",
         "bot_welcome": "你可以問我任何問題！"
+    },
+    "prompt":{
+        "history_aware_gen_query":"給定上述對話，生成一個搜索查詢，以獲取與對話相關的信息",
+        "qa":"下面是人類與AI之間的友好對話。AI很健談並提供大量具體細節。如果AI不知道問題的答案，它會如實說不知道。",
+        "context_qa":"根據以下內容回答用戶的問題：\n\n{context}"
     }
 }
