@@ -38,6 +38,11 @@ import { default as sqlite3InitModule } from 'node_modules/@sqlite.org/sqlite-wa
 import sqlite3Wasm from 'node_modules/@sqlite.org/sqlite-wasm/sqlite-wasm/jswasm/sqlite3.wasm'
 
 const OPFS_POOL_NAME='private-ai-opfs'
+let ARGS;
+self.addEventListener("message", function(e) {
+  ARGS = e.data.args;
+  // do whatever you need with the arguments
+}, false);
 
 sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, prefix) { return '' } }).then((sqlite3) => {
   log.debug("opfs:", sqlite3.capi.sqlite3_vfs_find("opfs"), sqlite3.oo1.OpfsDb)
@@ -328,7 +333,14 @@ sqlite3InitModule({ 'wasmBinary': sqlite3Wasm, 'locateFile': function (path, pre
   }.bind({ sqlite3 });
 
   //  sqlite3.initWorker1API()
-  sqlite3.installOpfsSAHPoolVfs({name:OPFS_POOL_NAME}).then((poolUtil) => {
+  
+  let pool_name = OPFS_POOL_NAME
+  if (ARGS && ARGS.length == 1 && ARGS[0] && ARGS[0].trim().length>0 ) {
+    pool_name = ARGS[0]
+  }
+  log.info("opfs pool name", ARGS, pool_name)
+
+  sqlite3.installOpfsSAHPoolVfs({name:pool_name}).then((poolUtil) => {
     // poolUtil contains utilities for managing the pool, described below.
     // VFS "opfs-sahpool" is now available, and poolUtil.OpfsSAHPoolDb
     // is a subclass of sqlite3.oo1.DB to simplify usage with

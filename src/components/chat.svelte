@@ -33,6 +33,7 @@
 
 	import { beforeUpdate, afterUpdate, tick } from "svelte";
 	import { ChatMode, EmbeddingServer, LLMServer } from "src/setting";
+	import ChatHistoryManager from "../llm/chat-history"
 
 	// 	// request("https://www.baidu.com")
 	// 	fetch("https://www.baidu.com", {
@@ -284,7 +285,7 @@
 			`${$_.t("settings.mode.title")} : ${getChatModeRecords()[selectedMode]}`,
 		);
 	}
-	async function handleClick() {
+	async function handleSendClick() {
 		if (!valid_config()) {
 			return;
 		}
@@ -293,6 +294,19 @@
 			textArea.value = "";
 			await process(value);
 		}
+	}
+
+	async function handleClearClick() {
+		if (!valid_config()) {
+			return;
+		}
+		if (textArea.value.trim() !== "") {
+			let value = textArea.value;
+			textArea.value = "";
+		}
+		let messageHistory = ChatHistoryManager.getInstance("default")
+		await messageHistory.clear()
+		comments=[]
 	}
 	function resizeTextarea() {
 		textArea.style.height = "";
@@ -359,17 +373,23 @@
 			on:input={resizeTextarea}
 		/>
 		<button
+				class="clear-button"
+				on:click={handleClearClick}>Clear</button>
+		<button
 			class="send-button"
 			bind:this={sendButton}
-			on:click={handleClick}
+			on:click={handleSendClick}
 		>
 		</button>
+		
 	</div>
 
 	<!-- </div> -->
 </div>
 
 <style>
+	
+	
 	/* .container {
 		display: grid;
 		 display: flex;

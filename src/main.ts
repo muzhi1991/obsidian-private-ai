@@ -1,5 +1,5 @@
 import log from 'loglevel';
-log.setLevel('WARN')
+log.setLevel('TRACE')
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, addIcon, normalizePath } from 'obsidian';
 
 import { VIEW_TYPE_CHAT, ChatView } from './views/chat-view'
@@ -14,7 +14,7 @@ import VectoreStoreSingleton from './llm/vectorstore-manager'
 // addIcon("my-bot",`<svg t="1716046019105" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8427" width="100" height="100"><path d="M303 324.9c42.4 0 76.4-33.9 76.4-76.4 0-42.4-33.9-76.4-76.4-76.4-42.4 0-76.4 33.9-76.4 76.4 0 42.5 34 76.4 76.4 76.4z m55.2-76.4c0 29.7-25.5 55.2-55.2 55.2-29.7 0-55.2-25.5-55.2-55.2 0-29.7 25.5-55.2 55.2-55.2 29.7 0.1 55.2 23.4 55.2 55.2z m364.9 76.4c42.4 0 76.4-33.9 76.4-76.4 0-42.4-33.9-76.4-76.4-76.4-42.4 0-76.4 33.9-76.4 76.4 0 42.5 34 76.4 76.4 76.4z m0-133.6c29.7 0 55.2 25.5 55.2 55.2 0 29.7-25.5 55.2-55.2 55.2-29.7 0-55.2-25.5-55.2-55.2 0-29.8 25.5-55.2 55.2-55.2z m0 0" fill="#2c2c2c" p-id="8428"></path><path d="M129 959.6h146.4c27.6 0 50.9-17 59.4-42.4h356.5c8.5 25.5 31.8 42.4 59.4 42.4h146.4c33.9 0 63.6-27.6 63.6-63.7V571.3c0-33.9-27.6-63.7-63.6-63.7H750.7c-27.6 0-50.9 17-59.4 42.4H530.6V428.9H721c99.7 0 182.5-82.8 182.5-182.5S820.7 63.9 721 63.9H305.1c-99.7 0-182.5 82.8-182.5 182.5s82.7 182.5 182.5 182.5h189.3v121.2H334.8c-8.5-25.5-31.8-42.4-59.4-42.4H129c-33.9 0-63.6 27.6-63.6 63.7V896c2.1 36 29.7 63.6 63.6 63.6z m210.1-386.2h350.1V898H339.1V573.4z m577.1 178.2v95.5H729.5v-95.5h186.7z m0-21.2H729.5V622.2h186.7v108.2z m-806.3 21.2h186.7v95.5H109.9v-95.5z m186.7-21.2H109.9V622.2h186.7v108.2z m-21.2 186.7H129c-10.6 0-21.2-8.5-21.2-21.2v-29.7h186.7v29.7c2.1 12.7-8.5 21.2-19.1 21.2z m621.7 0H750.7c-10.6 0-21.2-8.5-21.2-21.2v-29.7h186.7v29.7c0 12.7-8.5 21.2-19.1 21.2zM750.7 552.2h146.4c10.6 0 21.2 8.5 21.2 21.2V601H731.6v-27.6c-2.1-12.7 8.5-21.2 19.1-21.2zM305.1 108.5H721c76.4 0 140 63.7 140 140 0 76.4-63.6 140-140 140H305.1c-76.4 0-140-63.6-140-140 0-78.5 63.6-140 140-140zM129 552.2h146.4c10.6 0 21.2 8.5 21.2 21.2V601H109.9v-27.6c0-12.7 8.5-21.2 19.1-21.2z m0 0" fill="#2c2c2c" p-id="8429"></path></svg>`)
 
 import { WorkspaceLeaf, TFile, TAbstractFile } from "obsidian";
-import { plugin, needUpdateDB } from "./store";
+import { plugin, needUpdateDB,storageConfig,type StorageConfig } from "./store";
 import { SettingTab } from './views/setting-tab';
 import { type PrivateAIPluginSettings, DEFAULT_SETTINGS } from './setting'
 import { OramaStore } from './utils/orama-vectorstore';
@@ -114,9 +114,34 @@ export default class PrivateAIPlugin extends Plugin {
 	async setupDB() {
 		log.debug("init SQLite3")
 		await this.storageCheck()
+		
+		await this.createStorageConfig()
 		await initSQLite3()
 		await createDB(DB_FILE_NAME)
 
+	}
+
+	async createStorageConfig(){
+		let pluginDir = this.manifest.dir
+        let pp = normalizePath(
+            pluginDir +
+            "/storage-config.json" 
+        );
+		if(!await this.app.vault.adapter.exists(pp)){
+			log.info("create Storage Config")
+			const date=Date.now()
+			const config:StorageConfig = {createTime: date,sqliteDBName:this.app.vault.getName()+"-"+date};
+			const output = JSON.stringify(config);
+			await this.app.vault.adapter.write(pp, output)
+		}else{
+			log.info("get Storage Config")
+			const content=await this.app.vault.adapter.read(pp)
+			// if( !content || content.trim().length === 0){
+			// }
+			const result:StorageConfig = JSON.parse(content)
+			log.info("get Storage Config",result)
+			storageConfig.set(result)
+		}
 	}
 	async storageCheck() {
 		const opfsRoot = await navigator.storage.getDirectory();
@@ -130,7 +155,14 @@ export default class PrivateAIPlugin extends Plugin {
 				}
 			});
 		}
-		log.debug(opfsRoot, file)
+		let availableSpace = 0
+		if (navigator.storage && navigator.storage.estimate) {
+			const storageEstimate = await navigator.storage.estimate();
+			if (storageEstimate && storageEstimate.quota && storageEstimate.usage) {
+				availableSpace = storageEstimate.quota > storageEstimate.usage ? storageEstimate.quota - storageEstimate.usage : 0;
+			}
+		}
+		log.debug(opfsRoot, `available storage space:${(availableSpace/1024/1024/1024).toFixed(2)} GB`, file)
 	}
 
 	async registerCustomEvent() {
