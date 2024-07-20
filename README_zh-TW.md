@@ -12,6 +12,7 @@ Obsidian PrivateAI 插件 (PrivateAI) 是一個創新的 Obsidian 插件，致�
 * **Local First**: 支持 Ollama 本地方案，包括 LLM 和 Embedding 模型，確保數據隱私與快速響應。
 * **OpenAI 接口支持**: 對於無法本地部署的用戶，本插件提供對 OpenAI 接口的支持，且支持自定義配置。
 * **i18n 適配**: 支持多語言，目前支持英語、簡體中文、繁體中文和德語。
+* **介面適配 Obsidian**: 介面與 Obsidian 的主題適配，如同原生插件，保持一致性的用戶體驗。
 
 本插件提供三種對話模式：
 

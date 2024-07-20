@@ -18,6 +18,7 @@ The Obsidian PrivateAI Plugin (PrivateAI) is an innovative Obsidian plugin aimed
 * **Local First**: Supports Ollama local solutions, including LLM and Embedding models, ensuring data privacy and quick response.
 * **OpenAI Interface Support**: For users who cannot deploy locally, this plugin provides support for OpenAI interfaces with customizable configurations.
 * **i18n Adaptation**: Supports multiple languages; currently supports English, Simplified Chinese, Traditional Chinese, and German.
+* **Interface Adaptation for Obsidian**: The interface is adapted to Obsidian's theme, providing a user experience consistent with native plugins.
 
 The plugin offers three dialogue modes:
 

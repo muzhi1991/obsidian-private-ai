@@ -1,7 +1,7 @@
 {
 	"id": "private-ai-plugin",
 	"name": "PrivateAI",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"minAppVersion": "1.15.0",
 	"description": "Notebook AI assistant, RAG application, Ollama/OpenAI support",
 	"author": "muzhi1991",

@@ -12,6 +12,7 @@ Obsidian PrivateAI Plugin (PrivateAI) 是一个创新的 Obsidian 插件，致�
 * **Local First**: 支持 Ollama 本地方案，包括 LLM 和 Embedding 模型，确保数据隐私与快速响应。
 * **OpenAI 接口支持**: 对于无法本地部署的用户，本插件提供对 OpenAI 接口的支持，且支持自定义配置。
 * **i18n 适配**: 支持多语言，目前支持英语、简体中文、繁体中文和德语。
+* **界面适配 Obsidian**: 界面与 Obsidian 的主题适配，如同原生插件，保持一致性的用户体验。
 
 本插件提供三种对话模式：
 
@@ -107,7 +108,6 @@ Obsidian PrivateAI Plugin (PrivateAI) 是一个创新的 Obsidian 插件，致�
 
 ## Roadmap
 - 基础功能
-  - clear历史记录按钮
   - prompt配置功能
 - Chat 记录的 Workspace 管理功能
   - 使用恢复的上下文对话
