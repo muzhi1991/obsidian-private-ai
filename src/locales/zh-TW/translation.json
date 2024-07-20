@@ -69,7 +69,8 @@
         "notice_activate_view": "聊天视图已激活",
         "command_activate_view": "開啟聊天視圖",
         "input_placeholder": "在此輸入你的消息",
-        "bot_welcome": "你可以問我任何問題！"
+        "bot_welcome": "你可以問我任何問題！",
+        "clear_icon_tip": "清空"
     },
     "prompt":{
         "history_aware_gen_query":"給定上述對話，生成一個搜索查詢，以獲取與對話相關的信息",

@@ -206,9 +206,21 @@ export default class PrivateAIPlugin extends Plugin {
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
-		// this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-		// 	console.log('click', evt);
-		// });
+		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
+			log.debug('click', evt,evt.target);
+			// close mode select menu when click anywhere, excpet mode select button
+			if (evt.target && (evt.target as HTMLElement).className.contains('mode-menu-summary')){
+				log.debug((evt.target as HTMLElement).className);
+				return
+			}
+			let elements=document.getElementsByClassName("mode-menu-details");
+			for (let i = 0; i < elements.length; i++) {
+				const modeMenu = elements[i] as HTMLElement;
+				modeMenu.removeAttribute("open")
+				// log.debug("removeAttribute",modeMenu)
+			} 
+			// modeMenu.removeAttribute("open")
+		});
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		// this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
