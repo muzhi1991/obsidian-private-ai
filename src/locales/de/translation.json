@@ -69,7 +69,8 @@
         "notice_activate_view": "Die Chat-Ansicht ist aktiviert",
         "command_activate_view": "Chat-Ansicht öffnen",
         "input_placeholder": "Tippen Sie Ihre Nachrichten hier ein",
-        "bot_welcome": "Sie können mir alle Fragen stellen!"
+        "bot_welcome": "Sie können mir alle Fragen stellen!",
+        "clear_icon_tip": "Leeren"
     },
     "prompt":{
         "history_aware_gen_query":"Angesichts des obigen Gesprächs, erstellen Sie eine Suchanfrage, um Informationen zu erhalten, die für das Gespräch relevant sind.",

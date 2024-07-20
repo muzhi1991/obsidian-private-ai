@@ -19,6 +19,9 @@ export const renderMarkdown = (node: HTMLElement, content: string) => {
         if (pElement) {
             // pElement.style.padding = '1px';
             pElement.style.margin = '0em';
+            // pElement.style.verticalAlign = 'middle';
+            // pElement.style.lineHeight = '1.75em';
+            pElement.addClass('text-base')
         }
 
     }

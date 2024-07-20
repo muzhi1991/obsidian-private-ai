@@ -1,5 +1,7 @@
 import log from 'loglevel';
 import { sqlite3Worker1Promiser } from '@sqlite.org/sqlite-wasm';
+import {storageConfig,type StorageConfig} from '../store'
+import { get } from 'svelte/store'
 declare module '@sqlite.org/sqlite-wasm' {
   export function sqlite3Worker1Promiser(...args: any): any
 }
@@ -19,8 +21,12 @@ export const initSQLite3 = async () => {
         onready: (_promiser: Sqlite3Worker) => resolve(_promiser),
         worker: () => {
           log.trace("new run worker", WorkerScript)
+          const config:StorageConfig=get(storageConfig)
           //@ts-ignore
           DBWorker = WorkerScript();
+          if(config.sqliteDBName){
+            DBWorker.postMessage({ "args": [config.sqliteDBName] });
+          }
           return DBWorker
         },
         onerror: (...args: any) => log.error('worker1 promiser error', ...args),

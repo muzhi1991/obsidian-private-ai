@@ -69,7 +69,8 @@
         "notice_activate_view": "聊天视图已激活",
         "command_activate_view": "打开聊天视图",
         "input_placeholder": "在此输入您的消息",
-        "bot_welcome": "您可以问我任何问题！"
+        "bot_welcome": "您可以问我任何问题！",
+        "clear_icon_tip": "清空"
     },
     "prompt":{
         "history_aware_gen_query":"给定上述对话，生成一个搜索查询，以获取与对话相关的信息",

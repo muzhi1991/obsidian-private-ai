@@ -5,7 +5,12 @@ const plugin = writable<PrivateAIPlugin>();
 
 const needUpdateDB = writable<boolean>(false);
 
+export type StorageConfig = {
+    createTime:number;
+    sqliteDBName: string;
+};
 
+const storageConfig= writable<StorageConfig>();
 // export type CommentType = {
 //     id:string
 //     author: string;
@@ -14,4 +19,4 @@ const needUpdateDB = writable<boolean>(false);
 // };
 // const comments= writable<CommentType[]>();
 
-export  { plugin,needUpdateDB };
+export  { plugin,needUpdateDB,storageConfig };

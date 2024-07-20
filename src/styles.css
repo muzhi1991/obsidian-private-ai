@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.daisy-menu li > *:not(ul, .daisy-menu-title, details, .daisy-btn).daisy-active{
+    @apply bg-[--interactive-accent-hover];
+  }
+
+
+/*
+
+This CSS file will be included with your plugin, and
+available in the app when your plugin is enabled.
+
+If your plugin does not need CSS, delete this file.
+
+*/
+
+
+/** layout **/
+/* background-color: var(--background-secondary); */
+/* .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  } */
+
+/* background-color: var(--background-secondary); */
+/* .container .header{
+    display: flex;
+    flex: 0;
+    padding: 0;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    justify-content: space-between;
+    align-items: center
+} */
+
+ /* background-color: var(--background-secondary); */
+ /* border: 1em solid var(--background-primary); */
+/* .container .chat {
+    height: 0;
+    flex: 1 1 auto;
+    padding: 0.8em 0.8em 0em 0.8em;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    border-radius: 0.3em;
+} */
+
+/* background-color: var(--background-secondary); */
+/* .container .chatfooter {
+    display: flex;
+    padding: 1em;
+    padding-left: 0;
+    padding-right: 0.8em;
+    align-items: center;
+    position: relative;
+    
+} */
+
+
+/** header **/
+/* height: 1em; */
+/* .title {
+    font-size: 1.4em;
+    text-align: left;
+    margin-top: 0;
+    
+} */
+
+.mode {
+    /* font-size: 1em; */
+    /* text-align: right; */
+    /* margin-bottom: 1em; */
+    /* height: 1em; */
+    /* background-color:  var(--background-secondary-alt); */
+}
+
+
+/** chat **/
+
+/* article */
+/* .chat article {
+    margin: 0 0 0.8em 0;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+} */
+
+/* .assistant {
+    text-align: left;
+    transform-origin: bottom left;
+}
+
+.human {
+    text-align: right;
+    transform-origin: bottom right;
+} */
+
+/* span */
+/* .chat article span {
+    padding: 0.8em 0.8em;
+    display: inline-block;
+} */
+
+/* .assistant span {
+    background-color: var(--background-secondary-alt);
+    color: var(--text-normal);
+    border-radius: 1em 1em 1em 0;
+} */
+/**#0074d9; hsl(var(--accent-h), 10%, calc(var(--accent-l) + 1%))**/
+/* .human span {
+    background-color: var(--text-selection);
+    color: var(--text-accent-hover);
+    border-radius: 1em 1em 0 1em;
+    word-break: break-all;
+} */
+
+
+/** footer **/
+.container .chatfooter textarea {
+    /* resize: none; */
+    /* overflow: hidden; */
+    /* height: 0;
+    min-height: 6em;
+    max-height: 10em;
+    font-size: min(2.5vh, 1rem);
+    border: 2px solid var(--background-modifier-border);
+    width: 100%; */
+    /* color: var(--text-normal);
+    background-color: var(--background-secondary-alt); */
+}
+/* .clear-button {
+	position: absolute;
+	bottom: 1.8em;
+	left: 0.8em;
+} */
+/* .send-button {
+    margin-left: 0.8em;
+    color: var(--background-secondary-alt);
+    background-color:  var(--background-secondary-alt);
+} */
+/* .send-button svg{
+   color: var(--interactive-accent);
+   background-color: var(--background-secondary-alt);
+} */
+
+
+
+
+/**
+ * ==============================================
+ * Dot Flashing
+ * ==============================================
+ */
+ /* .dot-flashing {
+    margin-left: 1.8em;
+    margin-right: 2em;
+    position: relative;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--interactive-accent);
+    color: var(--interactive-accent);
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+.dot-flashing::before,
+.dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+.dot-flashing::before {
+    left: -9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--interactive-accent);
+    color: var(--interactive-accent);
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+}
+.dot-flashing::after {
+    left: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--interactive-accent);
+    color: var(--interactive-accent);
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+    0% {
+        background-color: var(--interactive-accent);
+    }
+    50%,
+    100% {
+        background-color: hsl(var(--accent-h), calc(var(--accent-s) - 10%), calc(var(--accent-l) + 20%));
+    }
+} */
